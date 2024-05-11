@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <record id="view_order_form_inherit_my" model="ir.ui.view">
+        <field name="name">sale.order.form.my</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='country_code']" position="before">
+                <field name="checking_date"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="nick_name" />
+            </xpath>
+
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button class="btn btn-info" string="Print selected orders" type="object" name="add_download_report_action"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_ebay_tree_view_my" model="ir.ui.view">
+        <field name="name">product.template.ebay.tree.my</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="before">
+            <field name="nick_name"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button class="btn btn-info" string="Print selected orders" type="object" name="add_download_report_action_delivery"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="stock_order_picking_form_view" model="ir.ui.view">
+        <field name="name">stock.order.picking.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='operations']/field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+                    position="after">
+                <field name="extra_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="facilities_sale_order_form_view" model="ir.ui.view">
+        <field name="name">event.facilities.sale.order.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='tax_id']" position="after">
+                <field name="extra_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="page_view_inherited" model="ir.ui.view">
+        <field name="name">page.view.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Commission">
+                    <group>
+                        <field name="commission_amount_on" />
+                        <field name="percentage" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    
+    </data>
+</odoo>

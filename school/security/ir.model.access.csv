@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_profile,school.profile,model_school_profile,base.group_user,1,1,1,1
+access_school_teacher,school.teacher,model_school_teacher,base.group_user,1,1,1,1
+access_school_student,school.student,model_school_student,base.group_user,1,1,1,1
+access_school_class,school.class,model_school_class,base.group_user,1,1,1,1
+access_school_subject,school.subject,model_school_subject,base.group_user,1,1,1,1
+access_student_result,student.result,model_student_result,base.group_user,1,1,1,1
+access_student_mark,student.mark,model_student_mark,base.group_user,1,1,1,1
+access_notify_remove_data_wizard,notify.remove.data.wizard,model_notify_remove_data_wizard,base.group_user,1,1,1,1
+access_total_amount_tax_wizard,total.amount.tax.wizard,model_total_amount_tax_wizard,base.group_user,1,1,1,1
+access_cancel_student_wizard,cancel.student.wizard,model_cancel_school_wizard,base.group_user,1,1,1,1
+access_sale_report_wizard,sale.report.wizard,model_sale_report_wizard,base.group_user,1,1,1,1
+access_delivery_report_wizard,delivery.report.wizard,model_delivery_report_wizard,base.group_user,1,1,1,1
+action_commission_sale_wizard,commission.sale.wizard,model_commission_sale_wizard,base.group_user,1,1,1,1
+action_commission_order,commission.order,model_commission_order,base.group_user,1,1,1,1
+action_commission_order_find,commission.order.find,model_commission_order_find,base.group_user,1,1,1,1
