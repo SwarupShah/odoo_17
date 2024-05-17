@@ -74,6 +74,23 @@
         </field>
     </record>
 
+    <record id="email_customer_view_my" model="ir.ui.view">
+        <field name="name">product.template.ebay.tree.my</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <group>
+                    <field name="customer_rank" invisible="1"/>
+                </group>
+                <header>
+                    <!-- The button will be visible only if 'customer_rank' is greater than 0 (indicating a customer) -->
+                    <button string="Send Mail" name="action_send_email" type="object" class="oe_highlight" invisible="customer_rank == 0"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+    
     
     </data>
 </odoo>

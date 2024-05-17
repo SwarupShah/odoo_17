@@ -25,8 +25,9 @@
             <field name="arch" type="xml">
                 <form>
                 <header>
-                  <button string="Add as Government" name="create_government" type="object" class="oe_highlight"/>
+                  <button string="Add as Government" name="create_government" type="object" class="oe_highlight" groups="school.group_gov_record_access"/>
                   <button string="Browse button" name="browse_button" type="object" class="oe_highlight"/>
+                  <button string="Send Mail" name="action_send_email" type="object" class="oe_highlight"/>
                 </header>
 
                     <sheet>

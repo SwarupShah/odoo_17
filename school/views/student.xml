@@ -40,6 +40,8 @@
                     <header>
                         <button string="Remove student" name="remove_student" type="object" class="oe_highlight" confirm="Are you sure you want to remove the student(s)?"/>
                         <button string="Result Page" name="%(school.action_student_result)d" class="oe_highlight" type="action"/>
+                        <button string="Send Mail" name="action_send_email" type="object" class="oe_highlight"/>
+
                     </header>   
                 <sheet>
                     <div name="button_box" class="oe_button_box" position="inside">

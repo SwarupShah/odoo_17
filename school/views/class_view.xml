@@ -13,7 +13,6 @@
                     <field name="schools" />
                     <field name="teachers"/>
                     <field name="total_students" />
-                    
                 </tree>
             </field>
         </record>
@@ -53,4 +52,3 @@
               parent="menu_school_other"/>
     </data>
 </odoo>
-

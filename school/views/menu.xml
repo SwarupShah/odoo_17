@@ -21,6 +21,7 @@
     <menuitem id="menu_school_other"
               parent="menu_school_root"
               name="Others"
+              groups="school.group_gov_record_access,school.group_school_owner_record_access,school.group_school_teacher_record_access"
     sequence="4"/>
 
     <!-- Sale module task-->
