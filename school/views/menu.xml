@@ -31,8 +31,8 @@
           sequence="100"/>
 
             <menuitem id="menu_commissions_sale_date"
-              name="Commissions select"
+              name="Excel Report"
               action="action_commission_sale_wizard_my"
-              parent="commission_sale_id"/>
+              parent="sale.menu_sale_report"/>
 
 </odoo>

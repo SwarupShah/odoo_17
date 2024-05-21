@@ -1,4 +1,9 @@
 from odoo import fields, models,api,_
+import io
+import xlsxwriter
+
+
+import base64
 
 class SchoolStudent(models.Model):
     _inherit = "school.person"
@@ -123,14 +128,9 @@ class SchoolStudent(models.Model):
             'target': 'new',
         }
     def action_send_email(self):
-        # template_id = self.env.ref('school.mail_template_blog')  # Replace 'your_module.email_template_id' with the actual ID of your email template
-        # template_id.send_mail(self.id, force_send=True)
         self.ensure_one()
-        # self.order_line._validate_analytic_distribution()
-        lang = self.env.context.get('lang')
         mail_template = self.env.ref('school.mail_student_template_blog')
-        if mail_template and mail_template.lang:
-            lang = mail_template._render_lang(self.ids)[self.id]
+        
         ctx = {
             'default_model': 'school.student',
             'default_res_ids': self.ids,
@@ -151,4 +151,60 @@ class SchoolStudent(models.Model):
             'target': 'new',
             'context': ctx,
         }
-        
+    def print_xlsx_report(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output)
+        sheet = workbook.add_worksheet('Transactions')
+
+        bold_format = workbook.add_format(
+            {'bold': True, 'align': 'center', 'font_size': 10, 'valign': 'vcenter', 'bg_color': '#f2eee4',
+             'border': True})
+        normal_format = workbook.add_format({'text_wrap': True, 'align': 'center', 'valign': 'top'})
+        date_format = workbook.add_format({'num_format': 'dd/mm/yy', 'align': 'center'})
+        sheet.set_column('A:G', 15)  # Adjust the width as needed
+        # Set row height
+        sheet.set_default_row(30)  # Adjust the height as needed
+        row = 1
+        col = 0
+
+        # Write headers with bold format
+        sheet.write('A1', 'Account Number', bold_format)
+        sheet.write('B1', 'Date',bold_format)
+        sheet.write('C1', 'Amount', bold_format)
+        sheet.write('D1', 'Transaction Type', bold_format)
+        sheet.write('E1', 'Email', bold_format)
+        sheet.write('F1', 'Name', bold_format)
+        sheet.write('G1', 'Mobile', bold_format)
+
+
+        sheet.write(row, col, self.name, normal_format)
+        sheet.write(row, col + 1, self.email, normal_format)
+        sheet.write(row, col + 2, self.phone, normal_format)
+        sheet.write(row, col + 3, self.date_of_birth, date_format)
+        sheet.write(row, col + 4, self.gender, normal_format)
+        sheet.write(row, col + 5, self.enrollment_date, date_format)
+        sheet.write(row, col + 6, self.total_fee, normal_format)
+
+
+        workbook.close()
+        output.seek(0)
+
+        # Encode the file to base64
+        excel_file = base64.b64encode(output.read())
+        output.close()
+
+        # Create an attachment
+        attachment = self.env['ir.attachment'].create({
+            'name': f'{self.name}_report.xlsx',
+            'type': 'binary',
+            'datas': excel_file,
+            'res_model': 'school.student',
+            'res_id': self.id,
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'self',
+        }

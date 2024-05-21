@@ -7,13 +7,12 @@
                 <form string="Commission Wizard">
                     <group>
                         <group>
-                            <field name="sales_person_id"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
                         </group>
                     </group>
                     <footer>
-                        <button string="Find" name="action_calculate_commission" class="oe_highlight btn btn-dark" type="object"/>
+                        <button string="Download Excel" name="action_xlsx_report_download" type="object" class="btn-warning"/>
                         <button string="Close" special="cancel" class="btn-secondary"/>
                     </footer>
                 </form>
