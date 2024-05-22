@@ -88,6 +88,9 @@
                     <button string="Send Mail" name="action_send_email" type="object" class="oe_highlight" invisible="customer_rank == 0"/>
                 </header>
             </xpath>
+            <xpath expr="//sheet/group/group" position="inside">
+                <field name="b_date"/>
+            </xpath>
         </field>
     </record>
     

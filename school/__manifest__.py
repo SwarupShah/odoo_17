@@ -17,6 +17,8 @@
         "data/school_email_tamplate.xml",
         "data/student_mail_template.xml",
         "data/res_partner_template.xml",
+        "data/cron_demo.xml",
+        "data/monthly_report.xml",
         
         "wizard/total_amount_wizard.xml",
         "wizard/anotified_wizard.xml",
