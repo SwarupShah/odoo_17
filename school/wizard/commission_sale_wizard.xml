@@ -12,7 +12,7 @@
                         </group>
                     </group>
                     <footer>
-                        <button string="Download Excel" name="action_xlsx_report_download" type="object" class="btn-warning"/>
+                        <button string="Download Excel" name="sdate_edate" type="object" class="btn-warning"/>
                         <button string="Close" special="cancel" class="btn-secondary"/>
                     </footer>
                 </form>

@@ -2,6 +2,7 @@ from odoo import api, fields, models
 import io
 import xlsxwriter
 import base64
+from datetime import datetime
 
 class CommissionWizard(models.TransientModel):
     _name = 'commission.sale.wizard'
@@ -9,16 +10,54 @@ class CommissionWizard(models.TransientModel):
 
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
+    
+    def sdate_edate(self):
+        outcome,status = self.fetch_from_sale(self.start_date,self.end_date)
+        # print(self.start_date,self.end_date)
+        if status:
+            excel_file = base64.b64encode(outcome)
+            # outcome.close()
 
-    def fetch_from_sale(self):
+            # Create an attachment
+            attachment = self.env['ir.attachment'].create({
+                'name': f'sales_report_from_{self.start_date}_to_{self.end_date}.xlsx',
+                'type': 'binary',
+                'datas': excel_file,
+                'res_model': 'commission.sale.wizard',
+                'res_id': self.id,
+                'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            })
+
+            return {
+                'type': 'ir.actions.act_url',
+                'url': f'/web/content/{attachment.id}?download=true',
+                'target': 'self',
+            }
+        else:
+            raise AccessError(_("OOPS! Unable to get record."))
+
+    def fetch_from_sale(self, start_date, end_date,in_wizard=True):
+        # Convert start_date and end_date to string format
+        if in_wizard:
+            start_date_str = start_date.strftime('%Y-%m-%d')
+            end_date_str = end_date.strftime('%Y-%m-%d')
+        else:
+            start_date_str = start_date
+            end_date_str = end_date
+
         domain = [
-            ('date_order', '>=', self.start_date),
-            ('date_order', '<=', self.end_date),  
+            ('date_order', '>=', start_date_str),
+            ('date_order', '<=', end_date_str),  
         ]
         action = self.env['sale.order'].search(domain)
-        return action
+        return self.action_xlsx_report_download(action, start_date_str, end_date_str)
+    
 
-    def action_xlsx_report_download(self):
+    def action_xlsx_report_download(self, data_add, start_date_str, end_date_str):
+        # Convert start_date_str and end_date_str back to datetime.date objects
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+        
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output)
         sheet = workbook.add_worksheet('Sales Report')
@@ -58,7 +97,7 @@ class CommissionWizard(models.TransientModel):
         sheet.set_row(0, 30)
 
         # Write report header
-        report_header = f"Sale report from {self.start_date.strftime('%d-%m-%Y')} to {self.end_date.strftime('%d-%m-%Y')}"
+        report_header = f"Sale report from {start_date} to {end_date}"
         sheet.merge_range('A1:O1', report_header, header_format)
         sheet.set_row(0, 25)  # Set row height for the header
         sheet.set_row(1, 30)
@@ -72,7 +111,7 @@ class CommissionWizard(models.TransientModel):
         for i, header in enumerate(headers):
             sheet.write(1, i, header, bold_format)
 
-        data = self.fetch_from_sale()
+        data = data_add
         row = 2  # Start from the third row
 
         # Initialize column totals
@@ -125,7 +164,7 @@ class CommissionWizard(models.TransientModel):
         sheet1.set_default_row(20)  
         sheet1.set_row(0, 30)
         
-        report_header1 = f"Customer report from {self.start_date.strftime('%d-%m-%Y')} to {self.end_date.strftime('%d-%m-%Y')}"
+        report_header1 = f"Customer report from {start_date} to {end_date}"
         sheet1.merge_range('A1:F1', report_header1, header_format)
         sheet1.set_row(0, 25)  # Set row height for the header
         sheet1.set_row(1, 30)
@@ -153,7 +192,7 @@ class CommissionWizard(models.TransientModel):
             "GROUP BY so.partner_id, rp.name"
         )
 
-        params = (self.start_date.strftime('%Y-%m-%d'), self.end_date.strftime('%Y-%m-%d'))
+        params = (start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
         self.env.cr.execute(query_fet, params)
         result_data = self.env.cr.fetchall()
         # print(result_data)
@@ -204,7 +243,7 @@ class CommissionWizard(models.TransientModel):
         sheet2.set_default_row(20)  
         sheet2.set_row(0, 30)
         
-        report_header2 = f"Product report from {self.start_date.strftime('%d-%m-%Y')} to {self.end_date.strftime('%d-%m-%Y')}"
+        report_header2 = f"Product report from {start_date} to {end_date}"
         sheet2.merge_range('A1:G1', report_header2, header_format)
         sheet2.set_row(0, 25)  # Set row height for the header
         sheet2.set_row(1, 30)
@@ -230,7 +269,7 @@ class CommissionWizard(models.TransientModel):
             "WHERE so.date_order BETWEEN %s AND %s "
             "GROUP BY pt.name, so.name, rp.name, so.partner_id, pt.list_price"
         )
-        params = (self.start_date.strftime('%Y-%m-%d'), self.end_date.strftime('%Y-%m-%d'))
+        params = (start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
         self.env.cr.execute(query_fet, params)
         result_data = self.env.cr.fetchall()
 
@@ -254,21 +293,5 @@ class CommissionWizard(models.TransientModel):
 
 
         # Encode the file to base64
-        excel_file = base64.b64encode(output.read())
-        output.close()
-
-        # Create an attachment
-        attachment = self.env['ir.attachment'].create({
-            'name': f'sales_report_from_{self.start_date}_to_{self.end_date}.xlsx',
-            'type': 'binary',
-            'datas': excel_file,
-            'res_model': 'commission.sale.wizard',
-            'res_id': self.id,
-            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        })
-
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f'/web/content/{attachment.id}?download=true',
-            'target': 'self',
-        }
+        return output.read(),True
+        

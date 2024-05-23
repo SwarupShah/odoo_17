@@ -12,8 +12,8 @@
                 <div style="margin: 0px; padding: 0px;">
                     <div style="justify-content: center;padding-left: 35px;text-decoration: none; border-radius: 5px; font-size:13px;width:40%">
                         <div>
-                            Hello <t t-out="object.name"/>,
-                            this is a ,onthly report
+                            Hello <t t-out="user.name"/>,<br></br>
+                            this is a ,Monthly report.
                         </div>
                         <br/>
                         Your Fathfully,

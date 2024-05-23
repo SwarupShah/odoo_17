@@ -77,27 +77,27 @@ class SaleOrder(models.Model):
         }
         
 
-    def create_monthly_report(self, records):
-        output = io.BytesIO()
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        worksheet = workbook.add_worksheet()
+    # def create_monthly_report(self, records):
+    #     output = io.BytesIO()
+    #     workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    #     worksheet = workbook.add_worksheet()
 
-        # Add headers to the worksheet
-        worksheet.write('A1', 'Name')
-        worksheet.write('B1', 'Email')
-        worksheet.write('C1', 'Birthdate')
+    #     # Add headers to the worksheet
+    #     worksheet.write('A1', 'Name')
+    #     worksheet.write('B1', 'Email')
+    #     worksheet.write('C1', 'Birthdate')
 
-        # row = 1
-        # for rec in records:
-        #     worksheet.write(row, 0, rec.name)
-        #     worksheet.write(row, 1, rec.email)
-        #     worksheet.write(row, 2, rec.b_date.strftime('%Y-%m-%d') if rec.b_date else '')
-        #     row += 1
+    #     # row = 1
+    #     # for rec in records:
+    #     #     worksheet.write(row, 0, rec.name)
+    #     #     worksheet.write(row, 1, rec.email)
+    #     #     worksheet.write(row, 2, rec.b_date.strftime('%Y-%m-%d') if rec.b_date else '')
+    #     #     row += 1
 
-        workbook.close()
-        output.seek(0)
-        return output.read()
-    
+    #     workbook.close()
+    #     output.seek(0)
+    #     return output.read()
+
     def run_monthly_notification(self):
         today = fields.Date.today()
         first_day_of_current_month = today.replace(day=1)
@@ -107,33 +107,33 @@ class SaleOrder(models.Model):
         # Now you have the starting and ending dates of the previous month
         start_date = first_day_of_previous_month.strftime('%Y-%m-%d')
         end_date = last_day_of_previous_month.strftime('%Y-%m-%d')
-        
-        records = self.search([])  # Fetch all relevant records
-        
-        # Create the monthly report
-        report_data = self.create_monthly_report(records)
-        
-        # Create a single attachment for the report
-        attachment = self.env['ir.attachment'].create({
-            'name': f'monthly_report_from_{start_date}_to_{end_date}.xlsx',
-            'type': 'binary',
-            'datas': base64.b64encode(report_data),
-            'res_model': 'sale.order',  # Update if needed
-            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        })
-        
-        # Prepare email values for all records
-        email_values = {
-            # 'email_to': ', '.join(rec.email for rec in records),  # Concatenate all email addresses
-            'subject': f"Report from {start_date} to {end_date}",
-            'attachment_ids': [(6, 0, [attachment.id])]
-        }
-        
-        # Send a single email with the report attachment to all recipients
-        mail_template = self.env.ref('school.mail_monthly_report_template_blog')
-        mail_template.send_mail(self.env.user.id, email_values=email_values, force_send=True)
+        # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", start_date, end_date)
+        report_record = self.env['commission.sale.wizard']
+        report_data, status = report_record.fetch_from_sale(start_date, end_date,False)
+        if status:
+            # Create the attachment
+            attachment = self.env['ir.attachment'].create({
+                'name': f'monthly_report_from_{start_date}_to_{end_date}.xlsx',
+                'type': 'binary',
+                'datas': base64.b64encode(report_data),
+                'res_model': 'sale.order',
+                'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            })
+
+            # Prepare email values for all records
+            email_values = {
+                'subject': f"Report from {start_date} to {end_date}",
+                'attachment_ids': [(6, 0, [attachment.id])]
+            }
+
+            # Send a single email with the report attachment to all recipients
+            mail_template = self.env.ref('school.mail_monthly_report_template_blog')
+            mail_template.send_mail(self.env.user.id, email_values=email_values, force_send=True)
+        else:
+            raise AccessError(_("OOPS! Unable to get record."))
 
 
+        
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
