@@ -8,6 +8,7 @@
             <field name="email_from">${(user.email or '').strip()}</field>
             <field name="email_to">${(object.email or '').strip()}</field>
             <field name="subject">Happy Birthday ${object.name}</field>
+            <field name="report_template_ids" eval="[(4, ref('school.action_res_partner'))]"/>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <div style="justify-content: center;padding-left: 35px;text-decoration: none; border-radius: 5px; font-size:13px;width:40%">

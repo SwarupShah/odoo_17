@@ -1,7 +1,8 @@
-from odoo import api, fields, models
+from odoo import api, fields, models,_
 import io
 import xlsxwriter
 import base64
+from odoo.exceptions import AccessError
 from datetime import datetime
 
 class CommissionWizard(models.TransientModel):
@@ -10,7 +11,6 @@ class CommissionWizard(models.TransientModel):
 
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
-    
     def sdate_edate(self):
         outcome,status = self.fetch_from_sale(self.start_date,self.end_date)
         # print(self.start_date,self.end_date)
@@ -35,9 +35,10 @@ class CommissionWizard(models.TransientModel):
             }
         else:
             raise AccessError(_("OOPS! Unable to get record."))
-
+        
     def fetch_from_sale(self, start_date, end_date,in_wizard=True):
         # Convert start_date and end_date to string format
+            
         if in_wizard:
             start_date_str = start_date.strftime('%Y-%m-%d')
             end_date_str = end_date.strftime('%Y-%m-%d')
@@ -290,8 +291,6 @@ class CommissionWizard(models.TransientModel):
         # Finalize the workbook
         workbook.close()
         output.seek(0)
-
-
         # Encode the file to base64
         return output.read(),True
         
