@@ -24,6 +24,11 @@
                             <field name="percentage"/>
                         </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"></field>
+                        <field name="activity_ids"></field>
+                        <field name="message_ids"></field>
+                    </div>
                 </form>
             </field>
         </record>
@@ -74,6 +79,9 @@
             <field name="name">Student Result</field>
             <field name="res_model">student.result</field>
             <field name="view_mode">tree,form,graph</field>
+            <field name="context">{}</field>
+            <!-- <field name="context">{'default_status': 'completed'}</field> -->
+            <!-- <field name="context">{'active_id': active_id, 'active_model': 'res.partner'}</field> -->
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Add student result detail hear.

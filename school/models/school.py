@@ -36,6 +36,13 @@ class SchoolProfile(models.Model):
         for school in self:
             school.class_count = len(school.class_ids)
 
+    # def name_get(self):
+    #     result = []
+    #     for record in self:
+    #         name = f"{record.name} ({record.organisation})"
+    #         result.append((record.id, name))
+    #     return result
+
     def action_get_student_record(self):
         # Check if the action is triggered from a form view and not in create mode
         return {
@@ -129,8 +136,6 @@ class SchoolProfile(models.Model):
             'target': 'new',
             'context': ctx,
         }
-        
-    
         
     # def action_send_email(self):
     #     mail_template = self.env.ref(sale.mail_template_blog)

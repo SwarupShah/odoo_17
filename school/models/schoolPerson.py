@@ -41,3 +41,5 @@ class SchoolPerson(models.Model):
     def _age_constrains(self):
         if self.age < 6:
             raise ValidationError("Age should be grater than 6")
+
+    

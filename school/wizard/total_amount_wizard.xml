@@ -13,9 +13,9 @@
                         <strong>Warning!</strong> If you are from government organisation than only Examination Fees and Other Fees is counted.
                     </p>
                 </div>
+                <h1><field name="student_name" readonly="1"/></h1>
                 <group>
                         <group>
-                            
                             <field name="annual_fees"/>
                             <field name="tuition_fees"/>
                             <field name="admission_fees"/>

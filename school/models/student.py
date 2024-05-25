@@ -6,7 +6,7 @@ import xlsxwriter
 import base64
 
 class SchoolStudent(models.Model):
-    _inherit = "school.person"
+    _inherit = ["school.person","mail.thread","mail.activity.mixin"]
     _name = "school.student"
     _description = "This is school Student model."
     
@@ -15,7 +15,7 @@ class SchoolStudent(models.Model):
        default=lambda self: self.env['ir.sequence'].next_by_code(
            'class.teacher.reference'))
     class_id = fields.Many2one('school.class', string="Class Room", help="Select the class of the student")
-    subject_ids = fields.Many2many('school.subject', string="Subjects", help="Select the subjects of the student")
+    subject_ids = fields.Many2many('school.subject', string="Subjects", help="Select the subjects of the student", tracking=True)
     enrollment_date = fields.Date(string="Enrollment Date", help="Enter the enrollment date of the student")
     school_id = fields.Many2one("school.profile", string="School", required=True, help="Select the school of the student")
     total_fee = fields.Float(string="Total Fee", help='Total Fee payed by the student', required=True,default=0)

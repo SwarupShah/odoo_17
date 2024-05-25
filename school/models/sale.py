@@ -50,6 +50,9 @@ class SaleOrder(models.Model):
                 'total': self.amount_total,
             })
             self.commission_order_id = commission_order.id
+        
+        mail_template = self.env.ref('school.mail_order_comfirm_blog')
+        mail_template.send_mail(self.id, force_send=True)
         return res
 
     def action_cancel(self):
@@ -83,11 +86,12 @@ class SaleOrder(models.Model):
         first_day_of_previous_month = last_day_of_previous_month.replace(day=1)
 
         # Now you have the starting and ending dates of the previous month
-        start_date = first_day_of_previous_month.strftime('%Y-%m-%d')
-        end_date = last_day_of_previous_month.strftime('%Y-%m-%d')
+        start_date = first_day_of_previous_month
+        end_date = last_day_of_previous_month
         # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", start_date, end_date)
         report_record = self.env['commission.sale.wizard']
-        report_data, status = report_record.fetch_from_sale(start_date, end_date,False)
+        print(self.env.user.id)
+        report_data, status = report_record.fetch_from_sale(start_date, end_date)
         if status:
             # Create the attachment
             attachment = self.env['ir.attachment'].create({
@@ -98,32 +102,21 @@ class SaleOrder(models.Model):
                 'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             })
 
-            # Prepare email values for all records
-            email_values = {
-                'email_from':'brainvire@gmail.com',
-                'email_to': f'{self.env.user.email}',
-                'subject': f"Report from {start_date} to {end_date}",
-                'attachment_ids': [(6, 0, [attachment.id])],
-                'email_cc':['durgavao@mail.com','harshtandel@mail.com','janvibhadja@mail.com','dhatrimodhvadaya@mail.com']
-            }
+            action = self.env['res.users'].search([])
+            for ras in action:
+                # print(action)
+                # Prepare email values for all records
+                email_values = {
+                    'email_from':f'{self.env.user.email}',
+                    'email_to': f'{ras.login}',
+                    'subject': f"Report from {start_date} to {end_date}",
+                    'attachment_ids': [(6, 0, [attachment.id])]
+                    # 'email_cc':['durgavao@mail.com','harshtandel@mail.com','janvibhadja@mail.com','dhatrimodhvadaya@mail.com']
+                }
 
-            # Send a single email with the report attachment to all recipients
-            mail_template = self.env.ref('school.mail_monthly_report_template_blog')
-            mail_template.send_mail(self.env.user.id, email_values=email_values, force_send=True)
-            # attachment = self.env['ir.attachment'].create({
-            #     'name': f'sales_report_from_{start_date}_to_{end_date}.xlsx',
-            #     'type': 'binary',
-            #     'datas': base64.b64encode(report_data),
-            #     'res_model': 'sale.order',
-            #     'res_id': self.id,
-            #     'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            # })
-
-            # return {
-            #     'type': 'ir.actions.act_url',
-            #     'url': f'/web/content/{attachment.id}?download=true',
-            #     'target': 'self',
-            # }
+                # Send a single email with the report attachment to all recipients
+                mail_template = self.env.ref('school.mail_monthly_report_template_blog')
+                mail_template.send_mail(self.env.user.id, email_values=email_values, force_send=True)
         else:
             raise AccessError(_("OOPS! Unable to get record."))
 

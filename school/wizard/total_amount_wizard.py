@@ -5,6 +5,8 @@ class NotifyRemoveData(models.TransientModel):
     _name = 'total.amount.tax.wizard'
     _description = "This is a notification before removing student records."
 
+
+    student_name=fields.Char(string="Student Name")
     annual_fees = fields.Float(string="Annual Fees", help='Annual Fees Field', default=0)
     tuition_fees = fields.Float(string="Tuition Fees",help="Tuition Fees Field", default=0)
     admission_fees = fields.Float(string="Admission Fees",help="Admission Fees Field", default=0)
@@ -14,7 +16,16 @@ class NotifyRemoveData(models.TransientModel):
     miscellaneous_fees = fields.Float(string="Miscellaneous Fees",help="Miscellaneous Fees Field", default = 0)
     other_fees = fields.Float(string="Other Fees",help="Other Fees Field", default = 0)
 
-    # @api.model
+    @api.model
+    def default_get(self, fields):
+        # print(fields) #this will return all the field defined above
+        res = super().default_get(fields)
+        # print(res) #this will return all the fiels whose defoult value us defined
+        student_id = self.env.context.get('active_id') #this will return id of the current student from where i am opening wizard
+        if student_id:
+            student = self.env['school.student'].browse(student_id)
+            res.update({'student_name': student.name})
+        return res
     def add_total_amount_actions(self):
         # Calculate total fee
         total_fee = self.annual_fees + self.tuition_fees + self.admission_fees + \
@@ -23,6 +34,7 @@ class NotifyRemoveData(models.TransientModel):
 
         # Update the total_fee field of the current student record
         active_student_id = self.env.context.get('active_id')
+        # print(active_student_id)
         if active_student_id:
             student = self.env['school.student'].browse(active_student_id)
             student.write({'total_fee': total_fee})

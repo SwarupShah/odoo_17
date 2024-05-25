@@ -19,6 +19,7 @@
         "data/res_partner_template.xml",
         "data/cron_demo.xml",
         "data/monthly_report.xml",
+        "data/order_confirm_email.xml",
         
         "wizard/total_amount_wizard.xml",
         "wizard/anotified_wizard.xml",

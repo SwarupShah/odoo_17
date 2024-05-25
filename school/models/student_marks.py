@@ -4,11 +4,12 @@ from odoo.exceptions import ValidationError,UserError
 
 class StudentMarks(models.Model):
     _name = "student.mark"
+    _inherit = ["mail.thread","mail.activity.mixin"]
     _description = "Student Marks Model"
 
     student_id = fields.Many2one('school.student', string="Student", readonly=True)
     subject_id = fields.Many2one('school.subject', string="Subject", readonly=True)
-    marks_obtained = fields.Float(string="Marks", help="Enter the marks obtained by the student")
+    marks_obtained = fields.Float(string="Marks", help="Enter the marks obtained by the student", tracking=True)
 
     @api.constrains('marks_obtained')
     def _check_marks_range(self):

@@ -36,19 +36,20 @@ class CommissionWizard(models.TransientModel):
         else:
             raise AccessError(_("OOPS! Unable to get record."))
         
-    def fetch_from_sale(self, start_date, end_date,in_wizard=True):
+    def fetch_from_sale(self, start_date, end_date):
         # Convert start_date and end_date to string format
             
-        if in_wizard:
-            start_date_str = start_date.strftime('%Y-%m-%d')
-            end_date_str = end_date.strftime('%Y-%m-%d')
-        else:
-            start_date_str = start_date
-            end_date_str = end_date
-
+        # if in_wizard:
+        start_date_str = start_date.strftime('%Y-%m-%d')
+        end_date_str = end_date.strftime('%Y-%m-%d')
+        # else:
+        #     start_date_str = start_date
+        #     end_date_str = end_date
+        print(self.env.user.id)
         domain = [
             ('date_order', '>=', start_date_str),
-            ('date_order', '<=', end_date_str),  
+            ('date_order', '<=', end_date_str),
+            ('user_id','=', self.env.user.id),
         ]
         action = self.env['sale.order'].search(domain)
         return self.action_xlsx_report_download(action, start_date_str, end_date_str)

@@ -19,6 +19,7 @@ class saleReportWizard(models.TransientModel):
     
     def print_report(self):
         # print(" order _idf >>>>>>>>>>>", self.order_id)
+        print(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>",self.env.context.get('active_id'))
         print(" selected order line <<<<<<<<<<<<<", self.order_line_ids)
         order_line = self.order_line_ids.mapped('id')
         print(" selected order line <<<<<<<<<<<<<", order_line)

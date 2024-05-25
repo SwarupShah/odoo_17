@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class StudentResult(models.Model):
     _name = "student.result"
+    _inherit = ["mail.thread","mail.activity.mixin"]
     _description = "Student Result Model"
 
     number = fields.Char(string='Reference', readonly=True,tracking=True, copy=False,
@@ -15,8 +16,8 @@ class StudentResult(models.Model):
         ('pending', 'Pending'),
         ('completed', 'Completed'),
         ('failed', 'Failed')
-    ], string="Status", default='pending', readonly=True)
-    percentage = fields.Float(string="Percentage", help="Percentage of marks obtained", readonly=True)
+    ], string="Status", default='pending', readonly=True, tracking=True)
+    percentage = fields.Float(string="Percentage", help="Percentage of marks obtained", readonly=True, tracking=True)
 
     # def unlink(self):
     #     raise UserError(_('You cannot delete the student result recurds.'))
