@@ -49,7 +49,6 @@ class CommissionWizard(models.TransientModel):
         domain = [
             ('date_order', '>=', start_date_str),
             ('date_order', '<=', end_date_str),
-            ('user_id','=', self.env.user.id),
         ]
         action = self.env['sale.order'].search(domain)
         return self.action_xlsx_report_download(action, start_date_str, end_date_str)
@@ -118,6 +117,8 @@ class CommissionWizard(models.TransientModel):
 
         # Initialize column totals
         column_totals = [0] * 4  # Columns H, I, J,O
+        
+        currency_symbol = ''
 
         for rec in data:
             currency_symbol = rec.currency_id.symbol if rec.currency_id else ''

@@ -19,7 +19,6 @@
             <field name="interval_type">months</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="user_id" ref="base.user_root"/> <!-- Assuming you want to run it as the administrator -->
             <field name="model_id" ref="model_sale_order"/>
             <field name="code">model.run_monthly_notification()</field>
             <field name="state">code</field>
