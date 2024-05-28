@@ -88,14 +88,14 @@ class SchoolProfile(models.Model):
                     'school.profile')
         return super().create(vals_list)
 
-    def unlink(self):
-        return {
-            'name': 'Delete School',
-            'type': 'ir.actions.act_window',
-            'res_model': 'cancel.school.wizard',
-            'view_mode': 'form',
-            'target': 'new'
-        }
+    # def unlink(self):
+    #     return {
+    #         'name': 'Delete School',
+    #         'type': 'ir.actions.act_window',
+    #         'res_model': 'cancel.school.wizard',
+    #         'view_mode': 'form',
+    #         'target': 'new'
+    #     }
 
     def copy(self, default=None):
         raise UserError(_('You cannot duplicate the school recurds.'))
