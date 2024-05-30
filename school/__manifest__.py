@@ -48,5 +48,6 @@
         "views/commission_view.xml",
         "views/commission_view_select.xml",
         "views/commission_order_line.xml",
+        "views/courses.xml",
     ]
 }

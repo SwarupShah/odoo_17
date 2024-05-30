@@ -66,7 +66,6 @@
                     <notebook>
                         <page string="Students" name="school_student">
                             <field name="student_ids"/>
-                                
                         </page>
                         <page string="Teachers" name="school_teachers">
                             <field name="teacher_ids"/>
@@ -75,6 +74,17 @@
                         <page string="Class" name="school_class">
                             <field name="class_ids"/>
                                 
+                        </page>
+                        <page string="Course" name="school_course">
+                            <field name="course_ids" mode="tree">
+                                <tree
+                                    string="Course List"
+                                    editable="bottom"
+                                    limit="200">
+                                    <field name="course_id"/>
+                                    <field name="total_student" />
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                     </sheet>

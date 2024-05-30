@@ -34,6 +34,16 @@ access_student_mark_teacher,student.mark,model_student_mark,school.group_school_
 access_student_mark_owner,student.mark,model_student_mark,school.group_school_owner_record_access,1,1,1,1
 access_student_mark_gov,student.mark,model_student_mark,school.group_gov_record_access,1,1,1,1
 
+access_course_student,provided.course,model_provided_course,school.group_school_student_record_access,1,0,0,0
+access_course_teacher,provided.course,model_provided_course,school.group_school_teacher_record_access,1,1,0,0
+access_course_owner,provided.course,model_provided_course,school.group_school_owner_record_access,1,1,1,0
+access_course_gov,provided.course,model_provided_course,school.group_gov_record_access,1,1,1,1
+
+access_course_line_student,provided.course.line,model_provided_course_line,school.group_school_student_record_access,1,0,0,0
+access_course_line_teacher,provided.course.line,model_provided_course_line,school.group_school_teacher_record_access,1,1,0,0
+access_course_line_owner,provided.course.line,model_provided_course_line,school.group_school_owner_record_access,1,1,1,0
+access_course_line_gov,provided.course.line,model_provided_course_line,school.group_gov_record_access,1,1,1,1
+
 access_notify_remove_data_wizard_student,notify.remove.data.wizard,model_notify_remove_data_wizard,school.group_school_student_record_access,1,0,0,0
 access_notify_remove_data_wizard_teacher,notify.remove.data.wizard,model_notify_remove_data_wizard,school.group_school_teacher_record_access,1,1,1,1
 access_notify_remove_data_wizard_owner,notify.remove.data.wizard,model_notify_remove_data_wizard,school.group_school_owner_record_access,1,1,1,1

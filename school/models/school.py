@@ -14,12 +14,14 @@ class SchoolProfile(models.Model):
     email = fields.Char(string="Email", help="Enter the email address of the school")
     phone = fields.Integer(string="Phone", help="Enter the phone number of the school")
     organisation = fields.Selection([("government", "Government"),("private", "Private")], string="Organisation", help="Select the type of organisation", default="private")
-    student_ids = fields.One2many("school.student",'school_id', string="No. of student", readonly=True)
+    student_ids = fields.One2many("school.student",'school_id', string="No. of student",readonly=True)
     teacher_ids = fields.One2many("school.teacher",'school_id', string="No. of teacher",readonly=True)
     class_ids = fields.One2many("school.class", "schools", string="Classes", readonly=True)
+    course_ids = fields.One2many("provided.course.line","school_id",string="Courses")
     student_count = fields.Integer(string="Student Count", compute="_compute_student_count")
     teacher_count = fields.Integer(string="Teacher Count", compute="_compute_teacher_count")
     class_count = fields.Integer(string="Class Count", compute="_compute_class_count")
+
 
     @api.depends('student_ids')
     def _compute_student_count(self):

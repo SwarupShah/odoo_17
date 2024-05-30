@@ -18,7 +18,9 @@
                     <field name="age"/>
                     <field name="join_date"/>
                     <field name="gender"/>
-                    <field name="currency_id" invisible="1"/>
+                    <!-- <field name="abs" />
+                    <field name="sba" /> -->
+                    <field name="currency_id" column_invisible="True"/>
                     <field name ="salary" />
                     <field name ="subject"/>
                     <field name="school_id"/>
@@ -48,10 +50,12 @@
                                 <field name="date_of_birth" />
                             </group>
                             <group>
+                                <!-- <field name="abs" />
+                                <field name="sba" /> -->
                                 <field name="age"/>
                                 <field name="join_date"/>
                                 <field name="gender"/>  
-                                <field name="currency_id"/>
+                                <field name="currency_id" invisible="1"/>
                                 <field name = "salary"/>
                                 <field name = "subject"/>
                                 <field name="school_id"/>
