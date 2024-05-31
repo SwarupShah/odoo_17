@@ -1,6 +1,7 @@
 from odoo import fields, models,api,_
 import io
 import xlsxwriter
+import pdb
 
 
 import base64
@@ -18,6 +19,7 @@ class SchoolStudent(models.Model):
     subject_ids = fields.Many2many('school.subject', string="Subjects", help="Select the subjects of the student", tracking=True)
     enrollment_date = fields.Date(string="Enrollment Date", help="Enter the enrollment date of the student")
     school_id = fields.Many2one("school.profile", string="School", required=True, help="Select the school of the student")
+    customer_details = fields.Html(string=' ', compute='_compute_customer_detail')
     total_fee = fields.Float(string="Total Fee", help='Total Fee payed by the student', required=True,default=0)
     marks_ids = fields.One2many("student.mark", 'student_id', string="Student Marks")
     result_ids = fields.One2many("student.result","student_id",string="Results")
@@ -25,6 +27,14 @@ class SchoolStudent(models.Model):
     result_count = fields.Integer(string="Result count", compute="_compute_result_count")
     marks_count = fields.Integer(string="marks count", compute="_compute_marks_count")
     
+    @api.depends('school_id')
+    def _compute_customer_detail(self):
+        for record in self:
+            if record.school_id:
+                record.customer_details = f"<p>{record.school_id.street}, {record.school_id.street2}<br/>{record.school_id.city}, {record.school_id.state_id.name}<br> {record.school_id.country_id.name}</p>"
+            else:
+                record.customer_details = "<p>No customer selected</p>"
+
     @api.depends('result_count')
     def _compute_result_count(self):
         for student in self:

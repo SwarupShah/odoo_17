@@ -2,7 +2,7 @@ from odoo import fields, models,api,_
 from odoo.exceptions import UserError
 
 
-class SchoolTeacher(models.Model):
+class ProvidedCourse(models.Model):
     _name = "provided.course"
     _description = "This is school teacher model."
 

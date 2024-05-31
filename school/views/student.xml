@@ -69,7 +69,6 @@
                             <field name="signature" widget="signature" options="{'auto': true}"/>
                             <field name="name"/>
                             <field name="email"/>
-                            
                         </group>
                         <group>
                             <field name="phone"/>
@@ -77,6 +76,7 @@
                             <field name="age"/>
                             <field name="gender"/>
                             <field name="school_id"/>
+                            <field name="customer_details" />
                             <field name="class_id" domain="[('schools','=',school_id)]"/>
                             <field name="subject_ids" widget="many2many_tags"/>
                             <field name="enrollment_date"/>
