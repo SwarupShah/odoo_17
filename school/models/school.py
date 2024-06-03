@@ -21,7 +21,7 @@ class SchoolProfile(models.Model):
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict', domain="[('country_id', '=?', country_id)]")
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     country_code = fields.Char(related='country_id.code', string="Country Code")
-    
+
     student_ids = fields.One2many("school.student",'school_id', string="No. of student",readonly=True)
     teacher_ids = fields.One2many("school.teacher",'school_id', string="No. of teacher",readonly=True)
     class_ids = fields.One2many("school.class", "schools", string="Classes", readonly=True)
@@ -116,6 +116,12 @@ class SchoolProfile(models.Model):
     def browse_button(self):
         res = super().browse(self.id)
         print(res)
+        # ras =  super().copy()
+        # print(ras.name)
+        # rps =  super().copy({
+        #     'name':'rahul'
+        # })
+        # print(rps.name)
     
     def action_send_email(self):
         # template_id = self.env.ref('school.mail_template_blog')  # Replace 'your_module.email_template_id' with the actual ID of your email template
