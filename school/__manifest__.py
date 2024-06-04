@@ -52,8 +52,9 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'school/static/src/view/js/*.js',
+            
             'school/static/src/view/xml/*.xml',
+            'school/static/src/view/js/*.js',
         ],
     },
     'installable': True,

@@ -6,10 +6,7 @@ import { registry } from "@web/core/registry";
 
 class jsClassModelInfo extends FormController {
     actionInfoForm() {
-        this.env.services.dialog.add(jsClassDialog, {
-            resModel: this.props.resModel,
-            resDesc: "This is a demo pop-up; feel free to customize the functionality to meet your requirements."
-        });
+        alert("hello, Brother");
     }
 }
 

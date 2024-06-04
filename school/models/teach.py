@@ -15,7 +15,6 @@ class SchoolTeacher(models.Model):
     currency_id = fields.Many2one(comodel_name='res.currency',default=lambda self: self.env['res.currency'].search([('name', '=', 'USD')]).id)
     subject = fields.Many2one("school.subject", string="Subject", required=True, help="Select the subject of the teacher", store=True)
     school_id = fields.Many2one("school.profile", string="School", required=True, help="Select the school of the teacher", store=True,
-        precompute=True,
         ondelete='restrict')
     # abs = fields.Float(string="demp", compute="_compute_count_abs")
     # sba =fields.Float(string="sba")
