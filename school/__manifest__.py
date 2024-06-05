@@ -34,6 +34,7 @@
         'report/sale_report.xml',
         'report/filter_data_report.xml',
         'report/res_partner.xml',
+        'report/hr_expense_report.xml',
         
         "views/menu.xml",
         "views/school_view.xml",

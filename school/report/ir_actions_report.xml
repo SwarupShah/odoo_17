@@ -42,4 +42,14 @@
     <field name="binding_model_id" ref="model_res_partner"/>
     <field name="binding_type">report</field>
 </record>
+<record id="action_hr_expence" model="ir.actions.report">
+    <field name="name">HR expence Report</field>
+    <field name="model">hr.expense</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">school.hr_expense_report</field>
+    <field name="report_file">school.hr_expense_report</field>
+    <field name="print_report_name">'User - %s' % (object.name)</field>
+    <field name="binding_model_id" ref="model_hr_expense"/>
+    <field name="binding_type">report</field>
+</record>
 </odoo>

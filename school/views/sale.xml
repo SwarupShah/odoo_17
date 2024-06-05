@@ -105,7 +105,7 @@
        </field>
    </record>
 
-   <record id="view_hr_exre_tree_inherit" model="ir.ui.view">
+   <!-- <record id="view_hr_exre_tree_inherit" model="ir.ui.view">
         <field name="name">hr.expense</field>
         <field name="model">hr.expense</field>
         <field name="inherit_id" ref="hr_expense.hr_expense_view_expenses_analysis_tree"/>
@@ -114,7 +114,7 @@
                 <attribute name="js_class">model_hr</attribute>
             </xpath>
         </field>
-    </record>
+    </record> -->
     <record id="view_sale_order_tree_inherit" model="ir.ui.view">
         <field name="name">sale.order</field>
         <field name="model">sale.order</field>

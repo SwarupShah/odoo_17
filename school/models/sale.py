@@ -459,4 +459,17 @@ class ResPartner(models.Model):
                 mail_template = self.env.ref('school.mail_res_partner_template_blog')
                 mail_template.send_mail(rec.id, email_values=email_values, force_send=True)
                 # print(f"Happy Birthday {rec.display_name} Again")
-    
+
+class SaleOrderLines(models.Model):
+    _inherit = "hr.expense"
+
+    def print_report(self):
+        print("<<<<<<<<<<<<>>>>>>>>>>>>",self.ids)
+        if len(self.ids) < 1:
+            data = self.env["hr.expense"].search([])
+            print(data)
+            action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = data).report_action(data)
+            return action
+        else:
+            action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = self).report_action(self)
+            return action
