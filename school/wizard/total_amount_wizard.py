@@ -16,7 +16,7 @@ class NotifyRemoveData(models.TransientModel):
     miscellaneous_fees = fields.Float(string="Miscellaneous Fees",help="Miscellaneous Fees Field", default = 0)
     other_fees = fields.Float(string="Other Fees",help="Other Fees Field", default = 0)
 
-    @api.model
+    @api.model_create_multi
     def default_get(self, fields):
         # print(fields) #this will return all the field defined above
         res = super().default_get(fields)

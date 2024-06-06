@@ -7,7 +7,7 @@ class SchoolProfile(models.Model):
     # _inherit = ['mai.thread']
     _description = "This is school profile."
     
-    number = fields.Char(string='Teacher Reference ID', readonly=True, tracking=True, copy=False,
+    number = fields.Char(string='Teacher Reference ID', readonly=True, copy=False,
        default=lambda self: self.env['ir.sequence'].next_by_code(
            'class.teacher.reference'))
     name = fields.Char(string="School Name", required=True, help="Enter the name of the school")

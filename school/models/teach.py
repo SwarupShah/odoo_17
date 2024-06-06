@@ -7,7 +7,7 @@ class SchoolTeacher(models.Model):
     _description = "This is school teacher model."
     _inherit = "school.person"
 
-    number = fields.Char(string='Teacher Reference ID', readonly=True,tracking=True, copy=False,
+    number = fields.Char(string='Teacher Reference ID', readonly=True, copy=False,
        default=lambda self: self.env['ir.sequence'].next_by_code(
            'class.teacher.reference'))
     join_date = fields.Date(string="Join Date", required=True, help="Enter the joining date of the teacher")

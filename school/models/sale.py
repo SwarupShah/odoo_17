@@ -63,7 +63,7 @@ class SaleOrder(models.Model):
             self.commission_order_id.unlink()
         return res
 
-    @api.model
+    @api.model_create_multi
     def _get_order_lines_to_report(self):
         order_lines_context = self.env.context.get('order_lines')
         if order_lines_context:
@@ -340,7 +340,21 @@ class SaleOrder(models.Model):
             else:
                 raise AccessError(_("OOPS! Unable to get record."))
 
-
+    def print_report(self):
+        print(self)
+        # if len(self.ids) < 1:
+        #     data = self.env["sale.order"].search([])
+        #     print(data)
+        #     action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = data).report_action(data)
+        #     return action
+        # else:
+        #     action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = self).report_action(self)
+        #     return action
+        return {
+            # 'type': 'ir.actions.act_window',
+            'res_model': 'sale.order',
+            'context': self.env.context,
+        }
         
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
@@ -367,7 +381,7 @@ class SaleOrderLines(models.Model):
     extra_tags = fields.Char(string="Extra field",
                              help="enter the date when order was placed")
     is_available = fields.Boolean(
-        string="Is Available", compute="_compute_available_or_not", invisible=True)
+        string="Is Available", compute="_compute_available_or_not")
 
     def _prepare_procurement_values(self, group_id=False):
         values = super(
@@ -464,7 +478,7 @@ class SaleOrderLines(models.Model):
     _inherit = "hr.expense"
 
     def print_report(self):
-        print("<<<<<<<<<<<<>>>>>>>>>>>>",self.ids)
+        # print("<<<<<<<<<<<<>>>>>>>>>>>>",self.ids)
         if len(self.ids) < 1:
             data = self.env["hr.expense"].search([])
             print(data)

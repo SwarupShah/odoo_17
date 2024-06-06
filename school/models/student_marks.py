@@ -17,7 +17,7 @@ class StudentMarks(models.Model):
             if record.marks_obtained < 0 or record.marks_obtained > 100:
                 raise ValidationError("Marks should be between 0 and 100.")
 
-    @api.model
+    @api.model_create_multi
     def write(self, vals):
         res = super(StudentMarks, self).write(vals)
         student_result_obj = self.env['student.result']

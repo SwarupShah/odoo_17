@@ -1,17 +1,17 @@
 /* @odoo-module */
 import {A} from './class_a'
 class B extends A {
-    setup() {
-        super.setup();
-        console.log("Class B setup");
-    }
-
+    // constructor(name){
+    //     this.name=name
+    // }
     methodB() {
+        // super(name)
+        // name = "swarup"
         console.log("Method B from class B");
     }
 
     methodA() {
-        super.methodA();
+        // print(name)
         console.log("Overridden Method A in class B");
     }
 

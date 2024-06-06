@@ -10,14 +10,14 @@
             <th name="th_extraField">Extra Field</th>                                     
         </xpath>
 
-        <xpath expr="//table/tbody[@class='sale_tbody']/t[@t-as='line']/tr/t[@t-if='not line.display_type']/td[@name['td_quantity']]" position="after">
+        <xpath expr="//table/tbody/t[@t-as='line']/tr/t[@t-if='not line.display_type']/td[@name['td_quantity']]" position="after">
             <td><span t-field="line.extra_tags"/></td>
         </xpath>
 
     </template>
 
-    <template id="gst_ffb_report_picking_inherit" inherit_id="stock.report_picking">
-        <xpath expr="//div[@class='row']/div[@name='div_outgoing_address']/div[@t-if='o.should_print_delivery_address()']/span" position="before">
+    <template id="report_picking_inherit" inherit_id="stock.report_picking">
+        <xpath expr="//div/div[@name='div_outgoing_address']/div[@t-if='o.should_print_delivery_address()']/span" position="before">
             
             <strong>Nick Name:</strong>
             <span class="m-0 text-end" t-field="o.nick_name">Nickname</span>

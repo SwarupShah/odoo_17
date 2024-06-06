@@ -67,7 +67,7 @@ class SchoolStudent(models.Model):
             'context': {'create': False}
         }
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         if vals.get('number', _('New')) == _('New'):
             vals['number'] = self.env['ir.sequence'].next_by_code('school.student')

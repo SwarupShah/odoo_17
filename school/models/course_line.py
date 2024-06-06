@@ -4,6 +4,7 @@ import pdb
 
 class ProvidedCourseLine(models.Model):
     _name = "provided.course.line"
+    _description = "This is course line teacher model."
 
     school_id = fields.Many2one('school.profile',string="school")
     course_id =  fields.Many2one('provided.course',string="Course Namem")

@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 
 class ProvidedCourse(models.Model):
     _name = "provided.course"
-    _description = "This is school teacher model."
+    _description = "This is course teacher model."
 
     number = fields.Char(string='course Reference ID', readonly=True, copy=False,
        default=lambda self: self.env['ir.sequence'].next_by_code(

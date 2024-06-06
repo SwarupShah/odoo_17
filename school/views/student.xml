@@ -123,7 +123,7 @@
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click">
                                 <div class="oe_kanban_image">
-                                    <img t-att-src="kanban_image('school.student', 'photo', record.id.raw_value)"/>
+                                    <img t-att-src="kanban_image('school.student', 'photo', record.id.raw_value)" alt="..."/>
                                 </div>
                                 <div class="oe_kanban_details">
                                     <strong><field name="number"/><br/><field name="name"/></strong>
