@@ -342,19 +342,47 @@ class SaleOrder(models.Model):
 
     def print_report(self):
         print(self)
-        # if len(self.ids) < 1:
-        #     data = self.env["sale.order"].search([])
-        #     print(data)
-        #     action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = data).report_action(data)
-        #     return action
-        # else:
-        #     action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = self).report_action(self)
-        #     return action
-        return {
-            # 'type': 'ir.actions.act_window',
-            'res_model': 'sale.order',
-            'context': self.env.context,
-        }
+        today = fields.Date.today()
+        print(today)
+        start_date = today
+        end_date = today
+        if len(self.ids) < 1:
+            data = self.env["sale.order"].search([
+                ('user_id','=',self.env.user.id),
+            ])
+            print(data)
+            report_data,status = self.action_xlsx_report_download(data, start_date, end_date,self.env.user.id)
+            if status:
+                # Create the attachment
+                attachment = self.env['ir.attachment'].create({
+                    'name': f'report_BV.xlsx',
+                    'type': 'binary',
+                    'datas': base64.b64encode(report_data),
+                    'res_model': 'sale.order',
+                    'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                })
+                return {
+                'type': 'ir.actions.act_url',
+                'url': f'/web/content/{attachment.id}?download=true',
+                'target': 'self',
+            }
+
+        else:
+            report_data,status = self.action_xlsx_report_download(self, start_date, end_date,self.env.user.id)
+            if status:
+                # Create the attachment
+                attachment = self.env['ir.attachment'].create({
+                    'name': f'report_BV.xlsx',
+                    'type': 'binary',
+                    'datas': base64.b64encode(report_data),
+                    'res_model': 'sale.order',
+                    'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                })
+                return {
+                'type': 'ir.actions.act_url',
+                'url': f'/web/content/{attachment.id}?download=true',
+                'target': 'self',
+                }
         
 class StockPicking(models.Model):
     _inherit = 'stock.picking'

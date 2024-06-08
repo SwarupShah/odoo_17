@@ -23,7 +23,7 @@
             <field name="name">school.form.view</field>
             <field name="model">school.profile</field>
             <field name="arch" type="xml">
-                <form>
+                <form js_class="school_profile_form">
                 <header>
                   <button string="Add as Government" name="create_government" type="object" class="oe_highlight" groups="school.group_gov_record_access"/>
                   <button string="Browse button" name="browse_button" type="object" class="oe_highlight"/>

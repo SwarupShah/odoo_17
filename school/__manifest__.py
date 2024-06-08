@@ -6,7 +6,7 @@
     'description' : 'This is school management system software supported in "odoo 17".',
     'sequence': -1,
     'category' : 'Education',
-    'depends' : ['mail','base','sale','sale_management','stock','web','hr_expense'],
+    'depends' : ['mail','base','sale','sale_management','stock','web','hr_expense','portal','website','website_sale','website_payment','website_mail','portal_rating', 'digest', 'delivery'],
     'license': 'OPL-1',
     'data':[
         "security/ir.model.access.csv",
@@ -52,10 +52,17 @@
         "views/courses.xml",
     ],
     'assets': {
-        'web.assets_backend': [
-            
-            'school/static/src/view/xml/*.xml',
-            'school/static/src/view/js/*.js',
+         'web.assets_backend': [
+            # 'school/static/src/view/xml/*.xml',
+            'school/static/src/view/js/class_a.js',
+            'school/static/src/view/js/class_b.js',
+            'school/static/src/view/js/js_blog_dialog.js',
+            'school/static/src/view/js/js_button_sale.js',
+            'school/static/src/view/js/js_button_he.js',
+            'school/static/src/view/js/school_icon_form.js',
+        ],
+        'web.assets_frontend': [
+            'school/static/src/view/js/hello.js'
         ],
     },
     'installable': True,

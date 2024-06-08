@@ -19,15 +19,18 @@ class jsClassModelListInfo extends ListController {
         super.setup();
         this.orm = useService('orm');
         this.user = useService("user");
+        this.actionService = useService('action');
         this.isExpenseSheet = this.model.config.resModel === "hr.expense.sheet";
     }
     async actionSaleList() {
         const records = this.model.root.selection;
-        console.log(records)
+        // console.log(records)
         const res = this.orm.call(this.model.config.resModel, 'print_report',[records.map((record) => record.resId)]);
-        // if (res) {
-        //     await this.actionService.doAction(res, {});
-        // }
+        if (res) {
+            await this.actionService.doAction(res, {});
+        } else {
+            console.error('Operation failed');
+        }
     }
 }
 jsClassModelListInfo.template = "school.modelSaleBtn";

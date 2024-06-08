@@ -4,6 +4,8 @@ from odoo.exceptions import UserError
 
 class SchoolProfile(models.Model):
     _name = "school.profile"
+
+    _rec_name ='number'
     # _inherit = ['mai.thread']
     _description = "This is school profile."
     
