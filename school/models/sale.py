@@ -63,7 +63,7 @@ class SaleOrder(models.Model):
             self.commission_order_id.unlink()
         return res
 
-    @api.model_create_multi
+    # @api.model_create_multi
     def _get_order_lines_to_report(self):
         order_lines_context = self.env.context.get('order_lines')
         if order_lines_context:

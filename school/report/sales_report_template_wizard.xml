@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <template id="report_saleorder_document_my" name="nai_kevu">
+        <template id="report_saleorder_document_my">
             <t t-call="web.external_layout">
                 <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
                 <t t-set="address">
@@ -89,45 +89,45 @@
 
                             <t t-set="current_subtotal" t-value="0"/>
 
-                            <t t-foreach="lines_to_report" t-as="line">
+                            <t t-foreach="lines_to_report" t-as="li">
 
-                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + li.price_subtotal"/>
 
-                                <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
-                                    <t t-if="not line.display_type">
-                                        <td name="td_name"><span t-field="line.name">Bacon Burger</span></td>
+                                <tr t-att-class="'bg-200 fw-bold o_line_section' if li.display_type == 'line_section' else 'fst-italic o_line_note' if li.display_type == 'line_note' else ''">
+                                    <t t-if="not li.display_type">
+                                        <td name="td_name"><span t-field="li.name">Bacon Burger</span></td>
                                         <td name="td_quantity" class="text-end">
-                                            <span t-field="line.product_uom_qty">3</span>
-                                            <span t-field="line.product_uom">units</span>
-                                            <span t-if="line.product_packaging_id">
-                                                (<span t-field="line.product_packaging_qty" t-options='{"widget": "integer"}'/> <span t-field="line.product_packaging_id"/>)
+                                            <span t-field="li.product_uom_qty">3</span>
+                                            <span t-field="li.product_uom">units</span>
+                                            <span t-if="li.product_packaging_id">
+                                                (<span t-field="li.product_packaging_qty" t-options='{"widget": "integer"}'/> <span t-field="li.product_packaging_id"/>)
                                             </span>
                                         </td>
                                         <td name="td_priceunit" class="text-end">
-                                            <span t-field="line.price_unit">3</span>
+                                            <span t-field="li.price_unit">3</span>
                                         </td>
                                         <td t-if="display_discount" class="text-end">
-                                            <span t-field="line.discount">-</span>
+                                            <span t-field="li.discount">-</span>
                                         </td>
                                         <td name="td_taxes" class="text-end">
                                             <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_id))">
                                                 Tax 15%
                                             </span>
                                         </td>
-                                        <td t-if="not line.is_downpayment" name="td_subtotal" class="text-end o_price_total">
-                                            <span t-field="line.price_subtotal">27.00</span>
+                                        <td t-if="not li.is_downpayment" name="td_subtotal" class="text-end o_price_total">
+                                            <span t-field="li.price_subtotal">27.00</span>
                                         </td>
                                     </t>
-                                    <t t-elif="line.display_type == 'line_section'">
+                                    <t t-elif="li.display_type == 'line_section'">
                                         <td name="td_section_line" colspan="99">
-                                            <span t-field="line.name">A section title</span>
+                                            <span t-field="li.name">A section title</span>
                                         </td>
-                                        <t t-set="current_section" t-value="line"/>
+                                        <t t-set="current_section" t-value="li"/>
                                         <t t-set="current_subtotal" t-value="0"/>
                                     </t>
-                                    <t t-elif="line.display_type == 'line_note'">
+                                    <t t-elif="li.display_type == 'line_note'">
                                         <td name="td_note_line" colspan="99">
-                                            <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                                            <span t-field="li.name">A note, whose content usually applies to the section or product above.</span>
                                         </td>
                                     </t>
                                 </tr>

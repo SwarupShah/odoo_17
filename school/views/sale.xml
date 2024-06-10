@@ -9,6 +9,7 @@
             <xpath expr="//field[@name='country_code']" position="before">
                 <field name="checking_date"/>
             </xpath>
+
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="nick_name" />
             </xpath>
@@ -16,6 +17,14 @@
             <xpath expr="//button[@name='action_cancel']" position="after">
                 <button class="btn btn-info" string="Print selected orders" type="object" name="add_download_report_action"/>
             </xpath>
+
+            <!-- <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">model_sale</attribute>
+            </xpath> -->
+
+            <!-- <xpath expr="//form" position="attributes">
+                <attribute name="js_class">model_info</attribute>
+            </xpath> -->
         </field>
     </record>
 
@@ -93,17 +102,6 @@
             </xpath>
         </field>
     </record>
-    
-   <record id="view_sale_order_form_inherit" model="ir.ui.view">
-       <field name="name">sale.order</field>
-       <field name="model">sale.order</field>
-       <field name="inherit_id" ref="sale.view_order_form"/>
-       <field name="arch" type="xml">
-           <xpath expr="//form" position="attributes">
-               <attribute name="js_class">model_info</attribute>
-           </xpath>
-       </field>
-   </record>
 
    <!-- <record id="view_hr_exre_tree_inherit" model="ir.ui.view">
         <field name="name">hr.expense</field>
@@ -115,16 +113,6 @@
             </xpath>
         </field>
     </record> -->
-    <record id="view_sale_order_tree_inherit" model="ir.ui.view">
-        <field name="name">sale.order</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.sale_order_tree"/>
-        <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
-                <attribute name="js_class">model_sale</attribute>
-            </xpath>
-        </field>
-    </record>
     
     </data>
 </odoo>

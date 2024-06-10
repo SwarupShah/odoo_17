@@ -116,12 +116,14 @@ class SchoolProfile(models.Model):
         self.write({'organisation': 'government'})
     
     def browse_button(self):
-        res = super().browse(self.id)
-        print(res)
+        pass
+        # res = super().create(vals_list)
+        # print(type(res))
+        # print(res)
         # ras =  super().copy()
         # print(ras.name)
         # rps =  super().copy({
-        #     'name':'rahul'
+        #     'name':'rahul-Duplicate'
         # })
         # print(rps.name)
     

@@ -3,10 +3,10 @@
 import {WebsiteSale} from "@website_sale/js/website_sale";
 
 WebsiteSale.include({
-    events: Object.assign({}, WebsiteSale.prototype.events, {
+    events: {
         "change select[name='state_id']": "_onChangeState",
         "change select[name='city_id']": "_onChangeCity",
-    }),
+    },
     start: function () {
         this.autoStreetTwo = document.querySelector(".div_street2");
 
