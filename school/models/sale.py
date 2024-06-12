@@ -515,3 +515,6 @@ class SaleOrderLines(models.Model):
         else:
             action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = self).report_action(self)
             return action
+
+class PlaningGantt(models.Model):
+    _inherit = "planning.slot"

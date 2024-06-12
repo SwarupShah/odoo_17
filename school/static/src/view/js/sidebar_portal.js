@@ -9,28 +9,24 @@ PortalSidebar.include({
     },
     start: function () {
         this.autoStreetTwo = document.querySelector(".o_portal_sidebar");
+        var button = this.autoStreetTwo.querySelector(".o_portal_sale_sidebar");
+        button.style.backgroundColor = "#DEDEDE"; 
+        button.style.borderRadius = "30px";
+        button.style.padding = "20px";
         // this.autoFromFirst = document.querySelector(".o_portal_sidebar_content");
         return this._super.apply(this, arguments);
     },
     _onChangeButton: function () {
-        console.log("frnjfbruf")
+        console.log("Hello brother")
         // console.log(this.autoStreetTwo.querySelectorAll(".o_portal_invoice_print"))
-        var button = this.autoStreetTwo.querySelector(".o_portal_sale_sidebar");
-
+        var button = this.autoStreetTwo.querySelector(".o_portal_invoice_print");
+        // debugger;
         if (button) {          
             // button.textContent = "Janvi";
-            button.style.backgroundColor = "#DEDEDE"; 
-            // button.style.color = "yellow";
-            // var head = this.autoStreetTwo.querySelector("#introduction");
-            // head.style.backgroundColor = "green";
+            button.style.backgroundColor = "#EA1818"; 
+            button.style.color = "#FCFCFC";
             button.style.borderRadius = "30px";
-            button.style.padding = "20px";
+            button.disabled = true;
         }
-
-        // var button1 = this.autoFromFirst.querySelector(".o_portal_sidebar_content");
-        // console.log(button1)
-        // if (button1) {          
-        //     button1.style.backgroundColor = "green"; 
-        // }
     },
 });

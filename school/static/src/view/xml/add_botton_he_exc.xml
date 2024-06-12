@@ -11,6 +11,11 @@
             <button type="button" class="btn btn-secondary" t-on-click="actionhrList">Download Report</button>
         </xpath>
     </t>
+    <t t-name="school.modelPlanningBtn" t-inherit="planning.PlanningGanttView.Buttons" t-inherit-mode="extension">
+        <xpath expr="//div" position="after">
+            <button type="button" class="btn btn-secondary" t-on-click="actionPlanningList">Download Report</button>
+        </xpath>
+    </t>
     <!-- <t t-name="school.modelHrBtn" t-inherit="web.ListView">
         <xpath expr="//t[@t-set-slot='control-panel-always-buttons']" position="inside">
             <button type="button" class="btn btn-secondary" t-on-click="() => this.actionhrList()">Send Mail</button>
