@@ -19,11 +19,15 @@
             </xpath>
 
             <!-- <xpath expr="//tree" position="attributes">
-                <attribute name="js_class">model_sale</attribute>
+                <attribute name="js_class">model_sale_list</attribute>
             </xpath> -->
 
-            <!-- <xpath expr="//form" position="attributes">
+            <xpath expr="//form" position="attributes">
                 <attribute name="js_class">model_info</attribute>
+            </xpath>
+
+            <!-- <xpath expr="//form" position="attributes">
+                <attribute name="js_class">model_icon</attribute>
             </xpath> -->
         </field>
     </record>
@@ -113,6 +117,16 @@
             </xpath>
         </field>
     </record> -->
+    <record id="view_hr_exre_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">model_sale</attribute>
+            </xpath>
+        </field>
+    </record>
     
     </data>
 </odoo>

@@ -5,9 +5,11 @@ import { registry } from "@web/core/registry";
 // import { jsClassDialog } from "./js_blog_dialog";
 
 class jsClassModelInfo extends FormController {
-    actionInfoForm() {
-        alert("hello, Brother");
-    }
+    async actionInfoForm() {
+        // var status = alert("hello, Brother");
+        const record = this.model.root;
+        console.log(record.data.partner_shipping_id);
+}
 }
 
 jsClassModelInfo.template = "school.modelInfoBtn";

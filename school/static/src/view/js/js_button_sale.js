@@ -4,15 +4,6 @@ import { listView } from "@web/views/list/list_view";
 import { ListController } from "@web/views/list/list_controller";
 import { useService } from '@web/core/utils/hooks';
 
-// A.include({
-//     /**
-//      * @override
-//      */
-//     async _methodA(){
-//         console.log("new_method")
-//     }
-// });
-
 class jsClassModelListInfo extends ListController {
     setup() {
         super.setup();

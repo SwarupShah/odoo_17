@@ -14,8 +14,8 @@ patch(PlanningGanttController.prototype, {
     async actionPlanningList() {
         console.log("hello brother");
         this.notificationService.add("You closed a deal!", {
-            title: "Congrats",
-            type: "success",
+            title: "OOPS!",
+            type: "warning",
             buttons: [
                 {
                     name: "See your Commission",

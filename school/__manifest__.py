@@ -17,10 +17,12 @@
             'school/static/src/view/js/js_button_sale.js',
             'school/static/src/view/js/js_button_he.js',
             'school/static/src/view/js/planning_button.js',
+            'school/static/src/view/js/form_user_logo.js'
         ],
         'web.assets_frontend': [
             'school/static/src/view/js/hello.js',
             'school/static/src/view/js/sidebar_portal.js',
+            
         ],
     },
     'data':[

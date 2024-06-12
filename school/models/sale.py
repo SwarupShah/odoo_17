@@ -28,40 +28,40 @@ class SaleOrder(models.Model):
     commission_order_id = fields.Many2one(
         'commission.order', string='Commission Order', readonly=True)
 
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        commission_value =0.0
-        if self.amount_total > self.user_id.partner_id.commission_amount_on:
-            # print("partner_id.commission_amount_on",self.user_id.partner_id.commission_amount_on)
-            commission_value = (self.amount_total*self.user_id.partner_id.percentage)/100
+    # def action_confirm(self):
+    #     res = super(SaleOrder, self).action_confirm()
+    #     commission_value =0.0
+    #     if self.amount_total > self.user_id.partner_id.commission_amount_on:
+    #         # print("partner_id.commission_amount_on",self.user_id.partner_id.commission_amount_on)
+    #         commission_value = (self.amount_total*self.user_id.partner_id.percentage)/100
             
-        if self.commission_order_id:
-            self.commission_order_id.write({
-                'order_id': self.name,
-                'customer_name': self.user_id.name,
-                'order_date': self.date_order,
-                'commission': commission_value,
-                'total': self.amount_total,
-            })
-        else:
-            commission_order = self.env['commission.order'].create({
-                'order_id': self.name,
-                'customer_name': self.user_id.name,
-                'order_date': self.date_order,
-                'commission': commission_value,
-                'total': self.amount_total,
-            })
-            self.commission_order_id = commission_order.id
+    #     if self.commission_order_id:
+    #         self.commission_order_id.write({
+    #             'order_id': self.name,
+    #             'customer_name': self.user_id.name,
+    #             'order_date': self.date_order,
+    #             'commission': commission_value,
+    #             'total': self.amount_total,
+    #         })
+    #     else:
+    #         commission_order = self.env['commission.order'].create({
+    #             'order_id': self.name,
+    #             'customer_name': self.user_id.name,
+    #             'order_date': self.date_order,
+    #             'commission': commission_value,
+    #             'total': self.amount_total,
+    #         })
+    #         self.commission_order_id = commission_order.id
         
-        mail_template = self.env.ref('school.mail_order_comfirm_blog')
-        mail_template.send_mail(self.id, force_send=True)
-        return res
+    #     mail_template = self.env.ref('school.mail_order_comfirm_blog')
+    #     mail_template.send_mail(self.id, force_send=True)
+    #     return res
 
-    def action_cancel(self):
-        res = super(SaleOrder, self).action_cancel()
-        if self.commission_order_id:
-            self.commission_order_id.unlink()
-        return res
+    # def action_cancel(self):
+    #     res = super(SaleOrder, self).action_cancel()
+    #     if self.commission_order_id:
+    #         self.commission_order_id.unlink()
+    #     return res
 
     # @api.model_create_multi
     def _get_order_lines_to_report(self):
@@ -411,13 +411,13 @@ class SaleOrderLines(models.Model):
     is_available = fields.Boolean(
         string="Is Available", compute="_compute_available_or_not")
 
-    def _prepare_procurement_values(self, group_id=False):
-        values = super(
-            SaleOrderLines, self)._prepare_procurement_values(group_id)
-        values.update({
-            'extra_tags': self.extra_tags
-        })
-        return values
+    # def _prepare_procurement_values(self, group_id=False):
+    #     values = super(
+    #         SaleOrderLines, self)._prepare_procurement_values(group_id)
+    #     values.update({
+    #         'extra_tags': self.extra_tags
+    #     })
+    #     return values
 
     # @api.depends('product_uom_qty', 'order_id.partner_id')
     # def _compute_available_or_not(self):
