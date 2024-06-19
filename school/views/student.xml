@@ -36,12 +36,11 @@
             <field name="name">student.form.view</field>
             <field name="model">school.student</field>
             <field name="arch" type="xml">
-                <form>
+                <form js_class="student_view_form">
                     <header>
                         <button string="Remove student" name="remove_student" type="object" class="oe_highlight" confirm="Are you sure you want to remove the student(s)?"/>
                         <button string="Result Page" name="%(school.action_student_result)d" class="oe_highlight" type="action"/>
                         <button string="Send Mail" name="action_send_email" type="object" class="oe_highlight"/>
-                        <button string="Print XLXS report" name="print_xlsx_report" type="object" class="oe_highlight"/>
                     </header>   
                 <sheet>
                     <div name="button_box" class="oe_button_box" position="inside">
@@ -80,6 +79,7 @@
                             <field name="class_id" domain="[('schools','=',school_id)]"/>
                             <field name="subject_ids" widget="many2many_tags"/>
                             <field name="enrollment_date"/>
+                            <field name="currency_id" invisible="1"/>
                             <field name="total_fee" string="Student Fee"></field>
                         </group>
                         <div class="alert alert-info" id="alert_draft_refund_tx" role="alert" widget="1000">
@@ -157,13 +157,14 @@
             <field name="name">student.tree.view</field>
             <field name="model">school.student</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree js_class="student_view_list">
                     <field name="number"/>
                     <field name="photo" widget="image"/>
                     <!-- <field name="signature" widget="signature"/> -->
                     <field name="name"/>
                     <field name="email"/>
                     <field name="phone"/>
+                    <field name="currency_id" column_invisible="True"/>
                     <field name="date_of_birth" />
                     <field name="age"/>
                     <field name="gender"/>
@@ -184,9 +185,10 @@
             <field name="name">Student</field>
             <field name="res_model">school.student</field>
             <field name="view_mode">kanban,tree,form,graph,search</field>
-            <field name="context">{}</field>
             <!-- <field name="context">{'search_default_group_by_student_adds': 1}</field>  adding defoult group  -->
             <!-- <field name="context">{'search_default_male': 1}</field>   adding defoult filter  -->
+            <!-- <field name="context">{}</field> -->
+            <field name="domain">[]</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Add student detail hear.

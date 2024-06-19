@@ -17,7 +17,8 @@
             'school/static/src/view/js/js_button_sale.js',
             'school/static/src/view/js/js_button_he.js',
             'school/static/src/view/js/planning_button.js',
-            'school/static/src/view/js/form_user_logo.js'
+            'school/static/src/view/js/form_controller.js',
+            'school/static/src/view/js/list_controller.js'
         ],
         'web.assets_frontend': [
             'school/static/src/view/js/hello.js',

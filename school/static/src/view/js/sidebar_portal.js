@@ -22,7 +22,6 @@ PortalSidebar.include({
         var button = this.autoStreetTwo.querySelector(".o_portal_invoice_print");
         // debugger;
         if (button) {          
-            // button.textContent = "Janvi";
             button.style.backgroundColor = "#EA1818"; 
             button.style.color = "#FCFCFC";
             button.style.borderRadius = "30px";

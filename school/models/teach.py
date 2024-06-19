@@ -26,8 +26,22 @@ class SchoolTeacher(models.Model):
             if vals.get('number', _('New')) == _('New'):
                 vals['number'] = self.env['ir.sequence'].next_by_code(
                     'school.teacher')
+        
+        # action = self.env['res.users'].browse(self.env.user.id)
+        # print(action)
+        # user = self.env.user
+
+        # # Determine if the user is a manager
+        # is_manager = user.has_group('school.group_school_teacher_record_access')
+        # print(is_manager)
+
+
         return super().create(vals_list)
 
+
+
+
+    
     # @api.depends('salary')
     # def _compute_count_abs(self):
     #     for line in self:

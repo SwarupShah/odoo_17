@@ -3,11 +3,11 @@ access_school_person,school.profile,model_school_person,base.group_user,1,1,1,1
 
 access_school_profile_student,school.profile,model_school_profile,school.group_school_student_record_access,1,0,0,0
 access_school_profile_teacher,school.profile,model_school_profile,school.group_school_teacher_record_access,1,0,0,0
-access_school_profile_owner,school.profile,model_school_profile,school.group_school_owner_record_access,1,1,1,0
+access_school_profile_owner,school.profile,model_school_profile,school.group_school_owner_record_access,1,1,1,
 access_school_profile_gov,school.profile,model_school_profile,school.group_gov_record_access,1,1,1,1
 
 access_school_teacher_student,school.teacher,model_school_teacher,school.group_school_student_record_access,1,0,0,0
-access_school_teacher_teacher,school.teacher,model_school_teacher,school.group_school_teacher_record_access,1,1,0,0
+access_school_teacher_teacher,school.teacher,model_school_teacher,school.group_school_teacher_record_access,1,1,1,0
 access_school_teacher_owner,school.teacher,model_school_teacher,school.group_school_owner_record_access,1,1,1,1
 access_school_teacher_gov,school.teacher,model_school_teacher,school.group_gov_record_access,1,1,1,1
 

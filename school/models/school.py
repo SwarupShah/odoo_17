@@ -28,9 +28,9 @@ class SchoolProfile(models.Model):
     teacher_ids = fields.One2many("school.teacher",'school_id', string="No. of teacher",readonly=True)
     class_ids = fields.One2many("school.class", "schools", string="Classes", readonly=True)
     course_ids = fields.One2many("provided.course.line","school_id",string="Courses")
-    student_count = fields.Integer(string="Student Count", compute="_compute_student_count")
-    teacher_count = fields.Integer(string="Teacher Count", compute="_compute_teacher_count")
-    class_count = fields.Integer(string="Class Count", compute="_compute_class_count")
+    student_count = fields.Integer(string="Student Count", compute="_compute_student_count", store=True)
+    teacher_count = fields.Integer(string="Teacher Count", compute="_compute_teacher_count", store=True)
+    class_count = fields.Integer(string="Class Count", compute="_compute_class_count", store=True)
 
 
     @api.depends('student_ids')
@@ -51,7 +51,7 @@ class SchoolProfile(models.Model):
     # def name_get(self):
     #     result = []
     #     for record in self:
-    #         name = f"{record.name} ({record.organisation})"
+    #         name = f"{record.name} ({record.email})" if record.email else record.name
     #         result.append((record.id, name))
     #     return result
 
@@ -116,23 +116,40 @@ class SchoolProfile(models.Model):
         self.write({'organisation': 'government'})
     
     def browse_button(self):
-        pass
-        # res = super().create(vals_list)
-        # print(type(res))
+        #reag_group
+        # res = self.env['school.student'].read_group([],['school_id:count','total_fee:sum'],['age'])
         # print(res)
+        # for i in res:
+        #     print(i['age'])
+        #     print(i['age_count'])
+        #     print(type(i['__domain']),i['__domain'])
+
+        # name_search
+        # res = self.env['school.student'].name_search('swarup')
+        # print(res)
+
+        #default_get
+        # res = self.env['school.student'].default_get(['currency_id','total_fee','name'])
+        # print(res)
+
+        #copy
         # ras =  super().copy()
         # print(ras.name)
         # rps =  super().copy({
         #     'name':'rahul-Duplicate'
         # })
         # print(rps.name)
+
+        #context
+        context = {'default_name': 'John Doe', 'default_age': 15,'self':self}
+        res = self.env['school.student'].with_context(context).example_context()
+        print("School model",res)
     
     def action_send_email(self):
         # template_id = self.env.ref('school.mail_template_blog')  # Replace 'your_module.email_template_id' with the actual ID of your email template
         # template_id.send_mail(self.id, force_send=True)
         self.ensure_one()
         # self.order_line._validate_analytic_distribution()
-        lang = self.env.context.get('lang')
         mail_template = self.env.ref('school.mail_school_template_blog')
         if mail_template and mail_template.lang:
             lang = mail_template._render_lang(self.ids)[self.id]

@@ -1,4 +1,5 @@
 from odoo import fields, models,api,_
+from odoo.exceptions import ValidationError
 import io
 import xlsxwriter
 import pdb
@@ -20,7 +21,8 @@ class SchoolStudent(models.Model):
     enrollment_date = fields.Date(string="Enrollment Date", help="Enter the enrollment date of the student")
     school_id = fields.Many2one("school.profile", string="School", required=True, help="Select the school of the student")
     customer_details = fields.Html(string=' ', compute='_compute_customer_detail')
-    total_fee = fields.Float(string="Total Fee", help='Total Fee payed by the student', required=True,default=0)
+    total_fee = fields.Monetary(string="Total Fee", help='Total Fee payed by the student', required=True,default=0)
+    currency_id = fields.Many2one(comodel_name='res.currency',default=lambda self: self.env['res.currency'].search([('name', '=', 'USD')]).id)
     marks_ids = fields.One2many("student.mark", 'student_id', string="Student Marks")
     result_ids = fields.One2many("student.result","student_id",string="Results")
     student_data = fields.Selection([("removed", "Removed"),("available", "Available")], string="Result Available status", help="If field is showing removed than student result are removed or present", default="available")
@@ -119,6 +121,13 @@ class SchoolStudent(models.Model):
         self.remove_student()
         super().unlink()
         return True
+
+    def example_context(self):
+        print("student",self)
+        print(self.env.context.get('default_age'))
+        print(self.env.context.get('default_name'))
+        print(self.env.context.get('self'))
+        return True
     
     def add_taxes_action(self):
         
@@ -131,12 +140,54 @@ class SchoolStudent(models.Model):
         #     'view_mode': 'form',
         #     'target': 'new',
         # }
+        user = self.env.user
+
+        # Determine if the user is a manager
+        is_teacher = user.has_group('school.group_school_teacher_record_access')
+        is_gov = user.has_group('school.group_gov_record_access')
+        is_owner = user.has_group('school.group_school_owner_record_access')
+        is_student = user.has_group('school.group_school_student_record_access')
+        # print(is_teacher)
+        data = {}
+        if is_teacher:
+            data = {
+                'default_annual_fees': 20000,
+                'default_tuition_fees':300,
+                'default_admission_fees':400,
+                'default_transportation_fee':200,
+                'default_examination_fees':200,
+                'default_development_fees':300,
+                'default_miscellaneous_fees':200,
+            }
+        elif is_gov:
+            data = {
+                'default_annual_fees': 300,
+                'default_tuition_fees':0,
+                'default_admission_fees':0,
+                'default_transportation_fee':0,
+                'default_examination_fees':50,
+                'default_development_fees':0,
+                'default_miscellaneous_fees':0,
+            }
+        elif is_owner:
+            data = {
+                'default_annual_fees': 10000,
+                'default_tuition_fees':432,
+                'default_admission_fees':100,
+                'default_transportation_fee':100,
+                'default_examination_fees':100,
+                'default_development_fees':100,
+                'default_miscellaneous_fees':100,
+            }
+        elif is_student:
+            raise ValidationError("")
         return {
             'name': 'Add Total Fees',
             'type': 'ir.actions.act_window',
             'res_model': 'total.amount.tax.wizard',
             'view_mode': 'form',
             'target': 'new',
+            'context' : data
         }
     def action_send_email(self):
         self.ensure_one()
@@ -172,6 +223,8 @@ class SchoolStudent(models.Model):
              'border': True})
         normal_format = workbook.add_format({'text_wrap': True, 'align': 'center', 'valign': 'top'})
         date_format = workbook.add_format({'num_format': 'dd/mm/yy', 'align': 'center'})
+        sheet.set_column('A:B', 10)  # Adjust the width as needed
+        sheet.set_column('C:C', 20)  # Adjust the width as needed
         sheet.set_column('A:G', 15)  # Adjust the width as needed
         # Set row height
         sheet.set_default_row(30)  # Adjust the height as needed
@@ -179,23 +232,33 @@ class SchoolStudent(models.Model):
         col = 0
 
         # Write headers with bold format
-        sheet.write('A1', 'Account Number', bold_format)
-        sheet.write('B1', 'Date',bold_format)
-        sheet.write('C1', 'Amount', bold_format)
-        sheet.write('D1', 'Transaction Type', bold_format)
-        sheet.write('E1', 'Email', bold_format)
-        sheet.write('F1', 'Name', bold_format)
-        sheet.write('G1', 'Mobile', bold_format)
+        sheet.write('A1', 'ID', bold_format)
+        sheet.write('B1', 'Name',bold_format)
+        sheet.write('C1', 'Email', bold_format)
+        sheet.write('D1', 'Phone No.', bold_format)
+        sheet.write('E1', 'DOB', bold_format)
+        sheet.write('F1', 'Age', bold_format)
+        sheet.write('G1', 'Gender', bold_format)
+        sheet.write('H1', 'Class No.', bold_format)
+        sheet.write('I1', 'Subjects', bold_format)
+        sheet.write('J1', 'Enrollment date', bold_format)
+        sheet.write('K1', 'Student Fee', bold_format)
+        sheet.write('L1', 'School', bold_format)
 
-
-        sheet.write(row, col, self.name, normal_format)
-        sheet.write(row, col + 1, self.email, normal_format)
-        sheet.write(row, col + 2, self.phone, normal_format)
-        sheet.write(row, col + 3, self.date_of_birth, date_format)
-        sheet.write(row, col + 4, self.gender, normal_format)
-        sheet.write(row, col + 5, self.enrollment_date, date_format)
-        sheet.write(row, col + 6, self.total_fee, normal_format)
-
+        for rec in self:
+            sheet.write(row, col, rec.number, normal_format)
+            sheet.write(row, col + 1, rec.name, normal_format)
+            sheet.write(row, col + 2, rec.email, normal_format)
+            sheet.write(row, col + 3, rec.phone, date_format)
+            sheet.write(row, col + 4, rec.date_of_birth, normal_format)
+            sheet.write(row, col + 5, rec.age, date_format)
+            sheet.write(row, col + 6, rec.gender, normal_format)
+            sheet.write(row, col + 7, rec.class_id.name, normal_format)
+            sheet.write(row, col + 8, rec.marks_count, normal_format)
+            sheet.write(row, col + 9, rec.enrollment_date, normal_format)
+            sheet.write(row, col + 10, rec.total_fee, normal_format)
+            sheet.write(row, col + 11, rec.school_id.name, normal_format)
+            row+=1
 
         workbook.close()
         output.seek(0)
@@ -206,11 +269,10 @@ class SchoolStudent(models.Model):
 
         # Create an attachment
         attachment = self.env['ir.attachment'].create({
-            'name': f'{self.name}_report.xlsx',
+            'name': f'student_report.xlsx',
             'type': 'binary',
             'datas': excel_file,
             'res_model': 'school.student',
-            'res_id': self.id,
             'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         })
 
@@ -219,3 +281,14 @@ class SchoolStudent(models.Model):
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'self',
         }
+    def print_report(self):
+        print(self.result_ids.status)
+        if self.result_ids.status == "completed":
+            action = self.env.ref('school.action_report_student_template').with_context(my_report=True, order_lines=self).report_action(self)
+            return action, {'status': 'pass'}
+        elif self.result_ids.status == "failed":
+            action = self.env.ref('school.action_report_student_template').with_context(my_report=True, order_lines=self).report_action(self)
+            return action, {'status': 'fail'}
+        elif self.result_ids.status == "pending":
+            action = self.env.ref('school.action_report_student_template').with_context(my_report=True, order_lines=self).report_action(self)
+            return action, {'status': 'pending'}

@@ -1,7 +1,7 @@
 from odoo import fields, models, api, _
 
 
-class NotifyRemoveData(models.TransientModel):
+class TotalAmountTaxWizard(models.TransientModel):
     _name = 'total.amount.tax.wizard'
     _description = "This is a notification before removing student records."
 
@@ -16,15 +16,26 @@ class NotifyRemoveData(models.TransientModel):
     miscellaneous_fees = fields.Float(string="Miscellaneous Fees",help="Miscellaneous Fees Field", default = 0)
     other_fees = fields.Float(string="Other Fees",help="Other Fees Field", default = 0)
 
+    
+
     @api.model_create_multi
     def default_get(self, fields):
-        # print(fields) #this will return all the field defined above
-        res = super().default_get(fields)
-        # print(res) #this will return all the fiels whose defoult value us defined
-        student_id = self.env.context.get('active_id') #this will return id of the current student from where i am opening wizard
+        res = super(TotalAmountTaxWizard, self).default_get(fields)
+        context = self.env.context
+        
+        # Setting default values from context
+        if 'default_annual_fees' in context:
+            res['annual_fees'] = context.get('default_annual_fees')
+        if 'default_tuition_fees' in context:
+            res['tuition_fees'] = context.get('default_tuition_fees')
+        if 'default_admission_fees' in context:
+            res['admission_fees'] = context.get('default_admission_fees')
+        
+        student_id = context.get('active_id')
         if student_id:
             student = self.env['school.student'].browse(student_id)
             res.update({'student_name': student.name})
+        
         return res
     def add_total_amount_actions(self):
         # Calculate total fee
