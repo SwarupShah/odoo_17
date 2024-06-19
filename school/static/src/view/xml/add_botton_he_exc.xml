@@ -50,4 +50,12 @@
         </xpath>
         
     </t> -->
+
+
+    <!-- POS -->
+    <!-- <t t-name="school.modelClearButton" t-inherit="point_of_sale.ProductScreen">
+        <xpath expr="//t/div/div[@t-att-class='{'flex-grow-1': ui.isSmall}']" position="inside">
+            <button type="button" class="btn btn-outline-dark" t-on-click="actionSaleList">Download Report</button>
+        </xpath>
+    </t> -->
  </templates>

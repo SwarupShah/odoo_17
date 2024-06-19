@@ -1,14 +1,18 @@
 {
     'name' : 'Education Management',
-    'version' : '1.1',
+    'version' : '17.0.0.1',
     'authors' : 'swarup shah',
     'summary' : 'Education management Management System',
     'description' : 'This is school management system software supported in "odoo 17".',
     'sequence': -1,
     'category' : 'Education',
-    'depends' : ['mail','base','sale','sale_management','stock','planning','web','hr_expense','portal','website'],
+    'depends' : ['base','mail','sale_management','stock','planning','web','hr_expense','portal','website_sale','point_of_sale'],
     'license': 'OPL-1',
     'assets': {
+        'web.assets_frontend': [
+            'school/static/src/view/js/hello.js',
+            'school/static/src/view/js/sidebar_portal.js',
+        ],
          'web.assets_backend': [
             'school/static/src/view/xml/*.xml',
             'school/static/src/view/js/class_a.js',
@@ -20,10 +24,9 @@
             'school/static/src/view/js/form_controller.js',
             'school/static/src/view/js/list_controller.js'
         ],
-        'web.assets_frontend': [
-            'school/static/src/view/js/hello.js',
-            'school/static/src/view/js/sidebar_portal.js',
-            
+        'point_of_sale._assets_pos': [
+            'school/static/src/pos/clear_button.xml',
+            'school/static/src/pos/clear_button.js',
         ],
     },
     'data':[
