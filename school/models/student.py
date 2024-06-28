@@ -100,10 +100,11 @@ class SchoolStudent(models.Model):
     def remove_student(self):
         # Delete associated student result records using email and phone
         emails = self.mapped('email')
+        print(emails)
         phones = self.mapped('phone')
         student_results = self.env['student.result'].search([('student_id.email', 'in', emails), ('student_id.phone', 'in', phones)])
         # student_results.ensure_one()
-        # print("search outcomes",student_results)
+        print("search outcomes",student_results)
         student_marks = self.env['student.mark'].search([('student_id.email', 'in', emails), ('student_id.phone', 'in', phones)])
         # search_count_print = self.env['student.mark'].search_count([('student_id.email', 'in', emails), ('student_id.phone', 'in', phones)])
         # print(search_count_print)

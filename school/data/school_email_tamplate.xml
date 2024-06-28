@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <data>
+    <data noupdate="1">
         <!--Template to send demo mail template for the customer-->
         <record id="mail_school_template_blog" model="mail.template">
             <field name="name">Email Template School</field>

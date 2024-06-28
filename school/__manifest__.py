@@ -27,6 +27,10 @@
         'point_of_sale._assets_pos': [
             'school/static/src/pos/clear_button.xml',
             'school/static/src/pos/clear_button.js',
+            'school/static/src/pos/pos_qunatity.js',
+            'school/static/src/pos/payment_button.js',
+            'school/static/src/pos/discount_button.js',
+            'school/static/src/pos/notes.js',
             'school/static/src/logo.xml',
             
         ],

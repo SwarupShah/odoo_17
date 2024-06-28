@@ -9,9 +9,7 @@ class SchoolProfile(models.Model):
     # _inherit = ['mai.thread']
     _description = "This is school profile."
     
-    number = fields.Char(string='Teacher Reference ID', readonly=True, copy=False,
-       default=lambda self: self.env['ir.sequence'].next_by_code(
-           'class.teacher.reference'))
+    number = fields.Char(string='Teacher Reference ID', readonly=True, copy=False)
     name = fields.Char(string="School Name", required=True, help="Enter the name of the school")
     email = fields.Char(string="Email", help="Enter the email address of the school")
     phone = fields.Integer(string="Phone", help="Enter the phone number of the school")
@@ -94,11 +92,15 @@ class SchoolProfile(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         """ Create a sequence for the school model"""
+        print(self)
+        print(vals_list)
         for vals in vals_list:
             if vals.get('number', _('New')) == _('New'):
                 vals['number'] = self.env['ir.sequence'].next_by_code(
                     'school.profile')
-        return super().create(vals_list)
+        stat = super().create(vals_list)
+        print(stat)
+        return stat
 
     # def unlink(self):
     #     return {

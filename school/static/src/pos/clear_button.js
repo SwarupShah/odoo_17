@@ -57,6 +57,11 @@ export class CreateButton extends Component {
             currentOrder.removeOrderline(i);
         }
     }
+    async onTestClick(){
+        const currentOrder = this.pos.get_order();
+        const product = currentOrder.get_selected_orderline();
+        this.pos.addProductToCurrentOrder(product)
+    }
 }
 /**
  * Add the OrderlineProductCreateButton component to the control buttons in

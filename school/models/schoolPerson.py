@@ -3,7 +3,7 @@ from odoo.exceptions import ValidationError
 from datetime import datetime
 
 
-class SchoolPerson(models.Model):
+class SchoolPerson(models.AbstractModel):
     _name = "school.person"
     _description = "This is a base model for school persons."
 
