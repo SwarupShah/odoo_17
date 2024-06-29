@@ -13,8 +13,11 @@ export class OrderDiscountButton extends Component {
     static template = "point_of_sale.discountButton";
 
     setup() {
+        super.setup();
         this.pos = usePos();
         this.popup = useService("popup");
+        this.orm = useService("orm")
+
     }
 
     async showPopup(){
@@ -40,12 +43,7 @@ export class OrderDiscountButton extends Component {
             const values = Number(inputNote);
             
             if (confirmed) {
-                // console.log(typeof(Number(inputNote)))
-                // console.log(Number(inputNote))
-                // console.log(values)
                 if (values){
-                // console.log(values)
-
                     if (values < 100 && values >= 0) {
                         for (const orderline of orderLines) {
                             orderline.set_discount(values);
@@ -71,6 +69,13 @@ export class OrderDiscountButton extends Component {
             }
 
         }
+    }
+    async onClickDiscountDefault(){
+        const Orderlines = this.pos.get_order().get_orderlines();
+        const result = await this.orm.call('pos.order', 'get_discount', ['true']);
+         for (let orderLine of Orderlines){
+            orderLine.set_discount(result);
+           }
     }
 }
 

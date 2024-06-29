@@ -23,7 +23,12 @@
         <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickDiscount()">
             <i class="fa fa-tag" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
             <span> </span>
-            <span>Discount</span>
+            <span>Discount </span>
+        </button>
+        <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickDiscountDefault()">
+            <i class="fa fa-percent" role="img" aria-label="Custom Alert" title="Custom Alert"/>
+            <span> </span>
+            <span>Default Discount</span>
         </button>
     </t>
     <!-- Quantity in information section -->
@@ -58,6 +63,14 @@
         </xpath>
     </t>
 
+    <t t-name="point_of_sale.NoteDisplay" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('order-container')]" position="after">
+            <span class="order-note">
+                
+            </span>
+        </xpath>
+
+    </t>
 
     <!-- <t t-name="point_of_sale.choilAdd" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension">
         <xpath expr="//div[@t-if='props.total or props.tax']" position="inside">

@@ -516,5 +516,38 @@ class SaleOrderLines(models.Model):
             action = self.env.ref('school.action_hr_expence').with_context(my_report = True, order_lines = self).report_action(self)
             return action
 
-class PlaningGantt(models.Model):
-    _inherit = "planning.slot"
+class PosOrder(models.Model):
+    _inherit = "pos.order"
+
+    custom_note = fields.Text(
+        string="Order Note")
+    
+
+    @api.model
+    def _order_fields(self,ui_order):
+        order_result = super(PosOrder, self)._order_fields(ui_order)
+        order_result['custom_note'] = ui_order.get('note' or "");
+        order_result['note'] = ui_order.get('note' or "");
+        return order_result
+    
+    def get_discount(self):
+        param_obj = self.env['ir.config_parameter'].sudo()
+        discount_limit = param_obj.get_param('sale_discount_limit.discount_limit', default=0.0)
+        return float(discount_limit)
+
+
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
+    is_discount_limit = fields.Boolean(string='',
+        config_parameter='sale_discount_limit.is_discount_limit',
+        help='Check this field for enabling discount limit', default="1")
+    discount_limit = fields.Float(string='%',
+        config_parameter='sale_discount_limit.discount_limit',
+        help='The discount limit amount in percentage ', default=10)
+
+    discount_percent = fields.Integer(
+    string="Discount",
+    config_parameter='discount_percent'
+    )
+
+    

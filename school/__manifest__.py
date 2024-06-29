@@ -31,6 +31,7 @@
             'school/static/src/pos/payment_button.js',
             'school/static/src/pos/discount_button.js',
             'school/static/src/pos/notes.js',
+            'school/static/src/pos/notes_add.js',
             'school/static/src/logo.xml',
             
         ],
