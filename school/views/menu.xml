@@ -34,5 +34,10 @@
               name="Excel Report"
               action="action_commission_sale_wizard_my"
               parent="sale.menu_sale_report"/>
+    <menuitem id="menu_school_config"
+    name="Configuration"
+    parent="menu_school_root"
+    sequence="50"/>
+    <!-- </menuitem> -->
 
 </odoo>

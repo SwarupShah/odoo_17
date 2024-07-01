@@ -136,28 +136,30 @@
             <xpath expr="//field[@name='session_id']"
                    position="after">
                <field name="custom_note"/>
+               <field name="discount" />
             </xpath>
         </field>
     </record>
-    <record id="res_config_settings_view_form" model="ir.ui.view">
+    <!-- <record id="res_config_settings_view_form" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.point_of_sales</field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//setting[@id='variant_options']" position="before">
-                <setting id="sale_discount_limit" title="User can limit the discount amount in the sale order line." help="User can limit the discount amount">
+                <setting id="sale_discount_limit" title="User can limit the discount amount in the sale order line." help="User can limit the discount amount"> -->
     <!--                   invisible="not group_discount_per_so_line"-->
-                    <field name="is_discount_limit"/>
-                    <div class="content-group">
+                    <!-- <field name="is_discount_limit"/>
+                    <div class="content-group"> -->
     <!--                       invisible="not is_discount_limit"-->
-                        <div class="mt16">
+                        <!-- <div class="mt16">
                             <label for="discount_limit"/>
                             <field name="discount_limit" invisible="is_discount_limit == 0"/>
                         </div>
                     </div>
                 </setting>
-            </xpath> </field>
-    </record>
+            </xpath> 
+        </field>
+    </record> -->
     <record id="res_config_setting_inherit" model="ir.ui.view">
         <field name="name">res.config.setting.inherit</field>
         <field name="model">res.config.settings</field>
@@ -166,18 +168,19 @@
             <xpath expr="//field[@name='pos_payment_method_ids']"
                    position="after">
                 <group>
-                   <field name="discount_percent"/>
+                    <field name="is_discount_limit"/>
+                    <field name="discount_limit" invisible="is_discount_limit == 0"/>
                 </group>
             </xpath>
         </field>
     </record>
-    <record id="res_config_settings_view_form" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.inherit.point_of_sale</field>
+    <record id="res_config_settings_view_discount_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.discount.point_of_sale</field>
         <field name="model">res.config.settings</field>
         <field name="priority" eval="95"/>
-        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//form" position="inside">
+            <xpath expr="//app/div/block[@id='pos_pricing_section']" position="after">
                 <block title="Discount" id="pos_discount_section">
                     <setting id="sale_discount_limit" title="User can limit the discount amount in the sale order line." help="User can limit the discount amount">
         <!--                   invisible="not group_discount_per_so_line"-->
@@ -190,6 +193,7 @@
                             </div>
                         </div>
                     </setting>
+                    
                 </block>
             </xpath>
         </field>

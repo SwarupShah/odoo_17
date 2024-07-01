@@ -69,5 +69,8 @@ export class CreateButton extends Component {
  */
 ProductScreen.addControlButton({
     component: CreateButton,
-    position: ["before","CustomerButton"]
+    position: ["before","CustomerButton"],
+    condition: function () {
+        return this.pos.config.enable_school;
+    },
 });

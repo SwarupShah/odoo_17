@@ -31,6 +31,13 @@
             <span>Default Discount</span>
         </button>
     </t>
+    <t t-name="point_of_sale.templateButton">
+        <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickShowTemp()">
+            <i class="fa fa-tag" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
+            <span> </span>
+            <span>Template </span>
+        </button>
+    </t>
     <!-- Quantity in information section -->
     <t t-name="point_of_sale.QuantityAdded" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension">
         <xpath expr="//div[@t-if='props.total or props.tax']" position="inside">
@@ -70,6 +77,15 @@
             </span>
         </xpath>
 
+    </t>
+    <t t-name="point_of_sale.NoteInReport" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-amount')]" position="after">
+            <t t-if="props.data.note">
+                <div class="order-note text-center">
+                    Note: <t t-esc="props.data.note"/>
+                </div>
+            </t>
+        </xpath>
     </t>
 
     <!-- <t t-name="point_of_sale.choilAdd" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension">

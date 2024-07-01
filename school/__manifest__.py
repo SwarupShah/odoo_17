@@ -78,6 +78,8 @@
         "views/commission_view_select.xml",
         "views/commission_order_line.xml",
         "views/courses.xml",
+        'views/setting_conf.xml',
+        "views/pos_config_views.xml",
     ],
     
     'installable': True,

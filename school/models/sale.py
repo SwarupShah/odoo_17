@@ -521,13 +521,15 @@ class PosOrder(models.Model):
 
     custom_note = fields.Text(
         string="Order Note")
+    discount = fields.Boolean(string="Discount")
     
 
     @api.model
     def _order_fields(self,ui_order):
         order_result = super(PosOrder, self)._order_fields(ui_order)
-        order_result['custom_note'] = ui_order.get('note' or "");
-        order_result['note'] = ui_order.get('note' or "");
+        order_result['custom_note'] = ui_order.get('note' or "")
+        order_result['note'] = ui_order.get('note' or "")
+        order_result['discount'] = ui_order.get('discount')
         return order_result
     
     def get_discount(self):
@@ -544,10 +546,15 @@ class ResConfigSettings(models.TransientModel):
     discount_limit = fields.Float(string='%',
         config_parameter='sale_discount_limit.discount_limit',
         help='The discount limit amount in percentage ', default=10)
+    
+    school_id = fields.Many2one("school.profile", string="Schools")
 
-    discount_percent = fields.Integer(
-    string="Discount",
-    config_parameter='discount_percent'
-    )
+
+    @api.constrains('discount_limit')
+    def limit(self):
+        for i in self:
+            if i.discount_limit:
+                if i.discount_limit <= 0 or i.discount_limit > 100:
+                    raise ValidationError('Field contail value between 0 & 100')
 
     

@@ -20,6 +20,7 @@ export class OrderNoteButton extends Component {
     async onClick() {
         const selectedOrderline = this.pos.get_order().get_selected_orderline();
         const order = this.pos.get_order();
+        // console.log()
         // console.log(this.pos.get_order())
         // console.log(this.pos.get_order().set_screen_data("fvjwrbre"))
         // console.log(this.pos.get_order().save_to_db("mmvmds"))
@@ -58,5 +59,8 @@ export class OrderNoteButton extends Component {
 
 ProductScreen.addControlButton({
     component: OrderNoteButton,
+    condition: function () {
+        return this.pos.config.enable_school;
+    },
 });
 

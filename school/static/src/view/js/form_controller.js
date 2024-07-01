@@ -53,7 +53,7 @@ class jsClassModelIcon extends FormController {
     }
     
     async actionFormIcon() {
-        console.log("hello brother");
+        // console.log("hello brother");
         this.notificationService.add("You closed a deal!", {
             title: "OOPS!",
             type: "warning",

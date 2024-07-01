@@ -72,13 +72,21 @@ export class OrderDiscountButton extends Component {
     }
     async onClickDiscountDefault(){
         const Orderlines = this.pos.get_order().get_orderlines();
+        const order = this.pos.get_order();
+        console.log(Orderlines)
+        console.log(this.pos.get_order())
+        console.log(this.pos.get_order().get_current_screen_data())
         const result = await this.orm.call('pos.order', 'get_discount', ['true']);
          for (let orderLine of Orderlines){
             orderLine.set_discount(result);
            }
+        order.setCustomDiscount(true);
     }
 }
 
 ProductScreen.addControlButton({
     component: OrderDiscountButton,
+    condition: function () {
+        return this.pos.config.enable_school;
+    },
 });
