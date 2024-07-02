@@ -33,7 +33,7 @@
     </t>
     <t t-name="point_of_sale.templateButton">
         <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickShowTemp()">
-            <i class="fa fa-tag" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
+            <i class="fa fa-regular fa-square" role="img" aria-label="Custom Alert" title="Custom Alert"></i>         
             <span> </span>
             <span>Template </span>
         </button>
@@ -85,6 +85,17 @@
                     Note: <t t-esc="props.data.note"/>
                 </div>
             </t>
+            <t t-if="props.data.sundryNote">
+                <div class="order-note text-center">
+                    Sundry Note: <t t-esc="props.data.sundryNote"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+    <!-- point_of_sale.PartnerListScreen -->
+    <t t-name="point_of_sale.sundryReport" t-inherit="point_of_sale.PartnerListScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('top-right-buttons')]" position="inside">
+            <button type="button" class="btn btn-outline-success" t-on-click="() => this.onClickSundryPartner(62)">Set Sundry Customer</button>
         </xpath>
     </t>
 

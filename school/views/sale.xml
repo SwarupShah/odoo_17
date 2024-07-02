@@ -81,6 +81,7 @@
                     <group>
                         <field name="commission_amount_on" />
                         <field name="percentage" />
+                        <field name="sundry_user" invisible="True"/>
                     </group>
                 </page>
             </xpath>

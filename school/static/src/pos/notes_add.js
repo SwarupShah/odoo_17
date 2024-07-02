@@ -16,9 +16,13 @@ patch(Order.prototype, {
     setCustomDiscount(discount){
         this.discount = discount;
     },
+    setCustomSundry(){
+        this.sundryNote = "Thank you for being out Sundry user";
+    },
     export_for_printing(){
         const result = super.export_for_printing(...arguments);
         result.note = this.note || "";
+        result.sundryNote = this.sundryNote || "";
         return result;
     }
 });

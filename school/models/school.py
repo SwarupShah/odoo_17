@@ -175,6 +175,29 @@ class SchoolProfile(models.Model):
             'target': 'new',
             'context': ctx,
         }
+    def pass_in_pos(self):
+        data = super().search([])
+        values = []
+        for lines in data:
+            # print(type(lines.phone))
+            # print(lines.phone)
+            values.append({
+                'id':lines.number,
+                'name':lines.name,
+                'email':lines.email if lines.email else "Na",
+                'phone':lines.phone if lines.phone > 100000000 else "Na",
+                'organisation':lines.organisation,
+                'zip':lines.zip if lines.zip else "Na",
+                'cirt':lines.city if lines.city else "Na",
+                'state':lines.state_id.name if lines.state_id.name else "Na",
+                'country':lines.country_id.name if lines.country_id.name else "Na",
+                'country_code':lines.country_code if lines.country_code else "Na",
+                'student_count':lines.student_count if lines.student_count != 0 else "Na",
+                'teacher_count':lines.teacher_count if lines.teacher_count != 0 else "Na",
+                'class_count':lines.class_count if lines.class_count != 0 else "Na",
+            })
+        # print(values)
+        return values 
         
     # def action_send_email(self):
     #     mail_template = self.env.ref(sale.mail_template_blog)

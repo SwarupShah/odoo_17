@@ -22,10 +22,11 @@
             'school/static/src/view/js/js_button_he.js',
             'school/static/src/view/js/planning_button.js',
             'school/static/src/view/js/form_controller.js',
-            'school/static/src/view/js/list_controller.js'
+            'school/static/src/view/js/list_controller.js',
         ],
         'point_of_sale._assets_pos': [
             'school/static/src/pos/clear_button.xml',
+            'school/static/src/pos/school_screen.xml',
             'school/static/src/pos/clear_button.js',
             'school/static/src/pos/pos_qunatity.js',
             'school/static/src/pos/payment_button.js',
@@ -33,6 +34,10 @@
             'school/static/src/pos/notes.js',
             'school/static/src/pos/notes_add.js',
             'school/static/src/logo.xml',
+            'school/static/src/pos/school_screen.js',
+            'school/static/src/pos/school_screen_template.js',
+            'school/static/src/pos/sundey_cust.js',
+
             
         ],
     },

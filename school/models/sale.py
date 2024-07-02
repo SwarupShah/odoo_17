@@ -456,6 +456,7 @@ class ResPartner(models.Model):
     b_date = fields.Date(
         string='Birthday date'
     )
+    sundry_user = fields.Boolean(string="Sunbry User")
     
 
     def action_send_email(self):
