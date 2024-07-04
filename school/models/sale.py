@@ -537,6 +537,18 @@ class PosOrder(models.Model):
         param_obj = self.env['ir.config_parameter'].sudo()
         discount_limit = param_obj.get_param('sale_discount_limit.discount_limit', default=0.0)
         return float(discount_limit)
+    
+    def get_location(self):
+        param_obj = self.env['pos.config'].search([])
+        results = []
+        for i in param_obj:
+            for r in i.location_ids:
+                results.append(r.location)
+        # print(results)
+        return results
+        # locations_id = param_obj.get_param('location_id', default=0.0)
+        # print("<<<<<<<<<<<<<<<<<",locations_id)
+        # return float(locations_id)
 
 
 class ResConfigSettings(models.TransientModel):
@@ -550,6 +562,12 @@ class ResConfigSettings(models.TransientModel):
     
     school_id = fields.Many2one("school.profile", string="Schools")
 
+    location_id = fields.Many2many(
+        string='Locations',
+        related='pos_config_id.location_ids',
+        readonly=False,
+    )
+    
 
     @api.constrains('discount_limit')
     def limit(self):
@@ -557,5 +575,7 @@ class ResConfigSettings(models.TransientModel):
             if i.discount_limit:
                 if i.discount_limit <= 0 or i.discount_limit > 100:
                     raise ValidationError('Field contail value between 0 & 100')
-
-    
+                    
+class PosConfig(models.Model):
+    _inherit = 'pos.config'
+    location_ids = fields.Many2many('res.location', string='Locations')

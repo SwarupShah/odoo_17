@@ -8,7 +8,7 @@
         }
       </style>
     <div class="button back text-end" t-on-click="back" t-if="!props.new_order">
-      <i class="fa fa-solid fa-backward fs-3 p-3" ></i>
+      <i class="fa fa-solid fa-backward text-danger fs-3 px-5 py-3" ></i>
     </div>
       <div class="container-md">
         <table class="table">

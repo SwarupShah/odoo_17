@@ -37,7 +37,9 @@
             'school/static/src/pos/school_screen.js',
             'school/static/src/pos/school_screen_template.js',
             'school/static/src/pos/sundey_cust.js',
-
+            'school/static/src/pos/custom_droapdown_popup.js',
+            'school/static/src/pos/custom_droapdown_popup.xml',
+            'school/static/src/pos/location_button.js'
             
         ],
     },
@@ -85,6 +87,7 @@
         "views/courses.xml",
         'views/setting_conf.xml',
         "views/pos_config_views.xml",
+        "views/res_location.xml",
     ],
     
     'installable': True,

@@ -31,6 +31,34 @@
             <span>Default Discount</span>
         </button>
     </t>
+    <!-- location button -->
+    <t t-name="point_of_sale.locationButton">
+            <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClick()">
+                <i class="fa-location" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
+                <!-- <i class="fa-solid fa-location-dot"></i> -->
+                <span> </span>
+                    <span t-esc="state.locationText"/>
+                
+            </button>
+    </t>
+
+    <!-- school order butto -->
+    <!-- <t t-name="point_of_sale.schoolOrderPopup">
+        <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickDiscount()">
+            <i class="fa fa-tag" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
+            <span> </span>
+            <span>Add School Order</span>
+        </button>
+    </t>
+    <t t-name="point_of_sale.schoolOrderTemplate">
+        <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickDiscountDefault()">
+            <i class="fa fa-percent" role="img" aria-label="Custom Alert" title="Custom Alert"/>
+            <span> </span>
+            <span>Show School Order</span>
+        </button>
+    </t> -->
+
+    <!-- template show button -->
     <t t-name="point_of_sale.templateButton">
         <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickShowTemp()">
             <i class="fa fa-regular fa-square" role="img" aria-label="Custom Alert" title="Custom Alert"></i>         

@@ -12,3 +12,4 @@ from . import commission_find
 from . import course
 from . import course_line
 from . import pos_config 
+from . import res_location

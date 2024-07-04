@@ -191,6 +191,7 @@
                             <div class="mt16">
                                 <label for="discount_limit"/>
                                 <field name="discount_limit" invisible="is_discount_limit == 0"/>
+                                <field name="location_id" widget="many2many_tags"/> 
                             </div>
                         </div>
                     </setting>

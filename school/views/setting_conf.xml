@@ -13,13 +13,14 @@
                                  help="Select the Contract Type"
                                  id="contract_type_setting">
                             <field name="is_discount_limit"/>
-                            <field name="discount_limit" invisible="is_discount_limit == 0"/>   
+                            <field name="discount_limit" invisible="is_discount_limit == 0"/> 
+                            
                         </setting>
                         <setting string="Add Discount in POS"
                                  help="Add duscount in pos model in %"
                                  id="school_type_setting">
                             <!-- <field name="is_discount_limit"/> -->
-                            <field name="school_id"/>   
+                            <field name="school_id" widget="many2many_tags"/>   
                         </setting>
                     </block>
                 </app>

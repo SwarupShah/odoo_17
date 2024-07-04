@@ -25,7 +25,7 @@ export class BookOrderPopup extends AbstractAwaitablePopup {
         this.pos = usePos();
         this.orm = useService("orm");
         this.order = this.pos.selectedOrder
-                this.pickup_date = useRef("pickUpDate")
+        this.pickup_date = useRef("pickUpDate")
         this.order_note= useRef("orderNote")
         this.delivery_date= useRef("deliveryDate")
         this.pickup= useRef("pickup_radio")

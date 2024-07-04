@@ -2,8 +2,12 @@
 
 import { PartnerListScreen } from "@point_of_sale/app/screens/partner_list/partner_list";
 // import { usePos } from "@point_of_sale/app/store/pos_hook";
-// import { CustomAlertPopup } from "@pos_buttons/js/PopUp/pos_pop_up";
+// import { TextAreaPopup } from "@point_of_sale/app/utils/input_popups/textarea_popup";
 import { patch } from "@web/core/utils/patch";
+// import { _t } from "@web/core/l10n/translation";
+
+// import { useService } from "@web/core/utils/hooks";
+
 patch(PartnerListScreen.prototype, {
 	
     onClickSundryPartner() {    
@@ -20,10 +24,9 @@ patch(PartnerListScreen.prototype, {
             break
             }
         }
-
+    },
         // let orders = this.pos.get_order()
         // this.state.selectedPartner = orders.cashier;
         // this.props.resolve({ confirmed: true, payload: this.state.selectedPartner });
         // this.pos.closeTempScreen();
-    }
 });
