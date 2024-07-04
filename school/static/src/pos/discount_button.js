@@ -32,6 +32,7 @@ export class OrderDiscountButton extends Component {
     }
 
     async onClickDiscount() {
+        console.log(this.pos.get_order())
         let status = true;
         while (status) {
             const orderLines = this.pos.get_order().get_orderlines();

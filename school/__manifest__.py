@@ -39,7 +39,10 @@
             'school/static/src/pos/sundey_cust.js',
             'school/static/src/pos/custom_droapdown_popup.js',
             'school/static/src/pos/custom_droapdown_popup.xml',
-            'school/static/src/pos/location_button.js'
+            'school/static/src/pos/location_button.js',
+            'school/static/src/pos/school_order.js',
+            'school/static/src/pos/school_order_popup.js',
+            'school/static/src/pos/school_order_popup.xml',
             
         ],
     },

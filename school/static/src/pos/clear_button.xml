@@ -33,24 +33,23 @@
     </t>
     <!-- location button -->
     <t t-name="point_of_sale.locationButton">
-            <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClick()">
-                <i class="fa-location" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
-                <!-- <i class="fa-solid fa-location-dot"></i> -->
-                <span> </span>
-                    <span t-esc="state.locationText"/>
-                
-            </button>
+        <button t-att-class="`control-button btn btn-light rounded-0 fw-bolder ${this.getButtonClass()}`" t-on-click="() => this.onClick()">
+            <i class="fa-location" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
+            <!-- <i class="fa-solid fa-location-dot"></i> -->
+            <span> </span>
+            <span t-esc="state.locationText"/>
+        </button>
     </t>
 
     <!-- school order butto -->
-    <!-- <t t-name="point_of_sale.schoolOrderPopup">
-        <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickDiscount()">
+    <t t-name="point_of_sale.schoolOrderTemplate">
+        <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClick()">
             <i class="fa fa-tag" role="img" aria-label="Custom Alert" title="Custom Alert"/>            
             <span> </span>
             <span>Add School Order</span>
         </button>
     </t>
-    <t t-name="point_of_sale.schoolOrderTemplate">
+    <!--  <t t-name="point_of_sale.schoolOrderPopup">
         <button class="control-button btn btn-light rounded-0 fw-bolder" t-on-click="() => this.onClickDiscountDefault()">
             <i class="fa fa-percent" role="img" aria-label="Custom Alert" title="Custom Alert"/>
             <span> </span>
@@ -116,6 +115,11 @@
             <t t-if="props.data.sundryNote">
                 <div class="order-note text-center">
                     Sundry Note: <t t-esc="props.data.sundryNote"/>
+                </div>
+            </t>
+            <t t-if="props.data.locatin_add">
+                <div class="order-note text-center">
+                    Location: <t t-esc="props.data.locatin_add"/>
                 </div>
             </t>
         </xpath>

@@ -523,6 +523,8 @@ class PosOrder(models.Model):
     custom_note = fields.Text(
         string="Order Note")
     discount = fields.Boolean(string="Discount")
+
+    location = fields.Char(String="Location", readonly=True)
     
 
     @api.model
@@ -531,6 +533,7 @@ class PosOrder(models.Model):
         order_result['custom_note'] = ui_order.get('note' or "")
         order_result['note'] = ui_order.get('note' or "")
         order_result['discount'] = ui_order.get('discount')
+        order_result['location'] = ui_order.get('locatin_add')
         return order_result
     
     def get_discount(self):

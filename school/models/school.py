@@ -175,6 +175,13 @@ class SchoolProfile(models.Model):
             'target': 'new',
             'context': ctx,
         }
+    def get_school_data(self):
+        data = super().search([])
+        values = []
+        for line in data:
+            values.append({'id':line.id,'name':line.name})
+        return values
+
     def pass_in_pos(self):
         data = super().search([])
         values = []

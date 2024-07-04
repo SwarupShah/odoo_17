@@ -13,3 +13,5 @@ from . import course
 from . import course_line
 from . import pos_config 
 from . import res_location
+from . import school_order
+from . import school_order_line
