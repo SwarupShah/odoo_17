@@ -91,6 +91,8 @@
         'views/setting_conf.xml',
         "views/pos_config_views.xml",
         "views/res_location.xml",
+        "views/school_order.xml",
+        "views/sale_order_aprove.xml",
     ],
     
     'installable': True,

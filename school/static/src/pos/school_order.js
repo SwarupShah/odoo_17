@@ -27,7 +27,7 @@ export class SchoolButton extends Component {
         let status = true;
         while(status){
             const data = await this.orm.call('school.profile', 'get_school_data', ['true']);
-            console.log(data);
+            // console.log(data);
 
             const { confirmed, payload } = await this.popup.add(schoolOrderPopup, {
                 title: _t("Create School Order"),
@@ -37,15 +37,33 @@ export class SchoolButton extends Component {
             });
 
             if (confirmed) {
-                if (!payload.school){
+                if (!payload.school_id){
                     await this.popup.add(ErrorPopup, {
                         title: _t("Invalid Location"),
-                        body: _t("Please select the proper location."),
+                        body: _t("OOPS! User not found."),
                         cancelKey: true,
                     });
                 }
                 else{
-                    console.log(payload.school)
+                    // console.log(payload)
+                    const cleanedPayload = {
+                        school_id: payload.school_id,
+                        school_name: payload.school_name,
+                        note: payload.note,
+                        amount: payload.amount,
+                        orderDate: payload.orderDate,
+                        deliveryDate: payload.deliveryDate,
+                        productOrderLine: payload.productOrderLine.map(line => ({
+                            id: line.product.id,
+                            product_id: line.product_id,
+                            quantity: line.quantity,
+                            price_unit: line.price_unit,
+                        })),
+                    };
+                    // console.log(cleanedPayload)
+                    const data = await this.orm.call('school.order', 'set_school_data', [cleanedPayload]);
+                    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>.",data)
+
                     break
                 }
             }

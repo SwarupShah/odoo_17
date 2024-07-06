@@ -6,12 +6,25 @@
             <span class="m-0 text-end" t-field="doc.nick_name">Nickname</span>                                     
         </xpath>
 
-        <xpath expr="//th[@name='th_quantity']" position="before">
+        <!-- <xpath expr="//th[@name='th_quantity']" position="before">
             <th name="th_extraField">Extra Field</th>                                     
         </xpath>
 
         <xpath expr="//table/tbody/t[@t-as='line']/tr/t[@t-if='not line.display_type']/td[@name['td_quantity']]" position="after">
             <td><span t-field="line.extra_tags"/></td>
+        </xpath> -->
+
+        <xpath expr="//th[@name='th_quantity']" position="before">
+            <th name="th_extraField">Image</th>                                     
+        </xpath>
+
+        <xpath expr="//table/tbody/t[@t-as='line']/tr/t[@t-if='not line.display_type']/td[@name['td_quantity']]" position="after">
+            <style>
+                .img-thumbnail{
+                    width: 10%;
+                }
+            </style>
+            <td class="img-thumbnail"><span t-field="line.product_image" t-options="{'widget': 'image'}" /></td>
         </xpath>
 
     </template>

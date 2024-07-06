@@ -17,6 +17,10 @@ class SaleOrder(models.Model):
     commission = fields.Float(
         string="Commission", compute="compute_commision_amount")
 
+    state = fields.Selection(
+        selection_add=[('to_approve', "To Approve")],
+    )
+
     # @api.depends("amount_total")
     # def compute_commision_amount(self):
     #     for i in self:
@@ -63,7 +67,31 @@ class SaleOrder(models.Model):
     #         self.commission_order_id.unlink()
     #     return res
 
+
     # @api.model_create_multi
+    # def create(self, vals_list):
+    #     # Call super to invoke the parent create method
+    #     orders = super(SaleOrder, self).create(vals_list)
+    #     print(orders.id)
+    #     param_obj = self.env['ir.config_parameter'].sudo()
+    #     amount_limit = param_obj.get_param('sale_discount_limit.amount_limit', default=0.0)
+    #     print(amount_limit)
+    #     print(orders.tax_totals.get('amount_total'))
+    #     if float(amount_limit) < orders.tax_totals.get('amount_total'):
+    #         orders.state = 'to_approve'
+
+    #     return orders
+    
+    def action_confirm(self):
+        param_obj = self.env['ir.config_parameter'].sudo()
+        amount_limit = param_obj.get_param('sale_discount_limit.amount_limit', default=0.0)
+        for order in self:
+            if order.amount_total > float(amount_limit):
+                order.state = "to_approve"
+            else:
+                super(SaleOrder, self).action_confirm()
+        return True        
+
     def _get_order_lines_to_report(self):
         order_lines_context = self.env.context.get('order_lines')
         if order_lines_context:
@@ -383,12 +411,20 @@ class SaleOrder(models.Model):
                 'url': f'/web/content/{attachment.id}?download=true',
                 'target': 'self',
                 }
-        
+    
+    def approve_to_order(self):
+        print(self)
+        self.env['sale.order'].browse(self.id).state = "sale"
+
+
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     nick_name = fields.Char(
         string="Nick Name", readonly=True, related='sale_id.nick_name')
+    
+    # product_image = fields.Image(string="Product Image", related='product_id.image_1920')
 
     def add_download_report_action_delivery(self):
         return {
@@ -410,6 +446,8 @@ class SaleOrderLines(models.Model):
                              help="enter the date when order was placed")
     is_available = fields.Boolean(
         string="Is Available", compute="_compute_available_or_not")
+
+    product_image = fields.Image(string='Product Image' ,related='product_id.image_1920')
 
     # def _prepare_procurement_values(self, group_id=False):
     #     values = super(
@@ -438,6 +476,7 @@ class writeAnotherDetail(models.Model):
 
     extra_tags = fields.Char(string="Extra field",
                              help="enter the date when order was placed")
+    product_image = fields.Image(string="Product Image", related='product_id.image_1920')
 
 
 class StockRule(models.Model):
@@ -448,6 +487,10 @@ class StockRule(models.Model):
         fields += ['extra_tags']
         return fields
 
+class AccountMove(models.Model):
+    _inherit = 'account.move.line'
+
+    product_image = fields.Image(string="Product Image", related='product_id.image_1920')
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -570,6 +613,11 @@ class ResConfigSettings(models.TransientModel):
         related='pos_config_id.location_ids',
         readonly=False,
     )
+
+    amount_limit = fields.Float(
+        string="Amount Limit",
+        help='Check this field for enabling discount limit', 
+        config_parameter='sale_discount_limit.amount_limit',)
     
 
     @api.constrains('discount_limit')

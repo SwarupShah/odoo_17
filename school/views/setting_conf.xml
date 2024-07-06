@@ -9,9 +9,9 @@
             <xpath expr="//form" position="inside">
                 <app data-string="Education Management system" string="Education Management system" name="school">
                     <block title="Education Management system Settings" name="school">
-                        <setting string="Contract Type"
-                                 help="Select the Contract Type"
-                                 id="contract_type_setting">
+                        <setting string="School Discount"
+                                 help="This is school discount for school order"
+                                 id="school_discount_setting">
                             <field name="is_discount_limit"/>
                             <field name="discount_limit" invisible="is_discount_limit == 0"/> 
                             
@@ -20,7 +20,7 @@
                                  help="Add duscount in pos model in %"
                                  id="school_type_setting">
                             <!-- <field name="is_discount_limit"/> -->
-                            <field name="school_id" widget="many2many_tags"/>   
+                            <field name="school_id"/>   
                         </setting>
                     </block>
                 </app>

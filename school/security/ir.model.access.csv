@@ -100,3 +100,5 @@ access_school_order_line_student,school.order.line,model_school_order_line,schoo
 access_school_order_line_teacher,school.order.line,model_school_order_line,school.group_school_teacher_record_access,1,1,1,1
 access_school_order_line_owner,school.order.line,model_school_order_line,school.group_school_owner_record_access,1,1,1,1
 access_school_order_line_gov,school.order.line,model_school_order_line,school.group_gov_record_access,1,1,1,1
+
+access_res_user_manager_group,res_user,base.model_res_users,school.group_manager_access,1,1,1,1

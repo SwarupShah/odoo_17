@@ -23,18 +23,29 @@ class BookOrderLine(models.Model):
                                   help="Sub total amount of each order line"
                                        "without tax",
                                   string='Subtotal w/o Tax')
-    price_subtotal_incl = fields.Float(compute='_compute_amount_line_all',
-                                       digits=0, string='Subtotal',
-                                       help="Sub total amount of each order "
-                                            "line with tax")
+    tax_ids = fields.Many2many('account.tax', string='Taxes',
+                               readonly=True, help="Taxes for each line", default=lambda self: self.env['account.tax'].search([('amount', '=', 15)], limit=1))
+    total_price = fields.Float(string="Total Amount",compute='_compute_amount_subtotal')
     discount = fields.Float(string='Discount (%)', digits=0, default=0.0,
                             help="You can apply discount for each product")
     order_id = fields.Many2one('school.order', string='Order Ref',
                                help="Relation to book order field",
                                ondelete='cascade')
-    # tax_ids = fields.Many2many('account.tax', string='Taxes',
-    #                            readonly=True, help="Taxes for each line")
-    # tax_after_fiscal_position_ids = fields.Many2many(
-    #     'account.tax', 'account_tax_rel', 'uid',
-    #     'tag_id', string='Taxes', help="Fiscal position after entering "
-    #                                    "the tax")
+    
+    @api.depends('price_unit', 'qty', 'discount')
+    def _compute_amount_line_all(self):
+        for line in self:
+            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            taxes = line.tax_ids.compute_all(price, line.order_id.company_id.currency_id, line.qty)
+            line.price_subtotal = taxes['total_excluded']
+
+    @api.depends('price_subtotal', 'tax_ids')
+    def _compute_amount_subtotal(self):
+        for line in self:
+            taxes = line.tax_ids.compute_all(line.price_subtotal, line.order_id.company_id.currency_id, 1)
+            line.total_price = taxes['total_included']
+
+    @api.onchange('product_id')
+    def _inchange_unit_price(self):
+        self.price_unit = self.product_id.product_tmpl_id.list_price
+

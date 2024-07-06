@@ -12,19 +12,31 @@
 
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="nick_name" />
+                <!-- <field name="state" string="My State" readonly="False"/> -->
             </xpath>
 
             <xpath expr="//button[@name='action_cancel']" position="after">
                 <button class="btn btn-info" string="Print selected orders" type="object" name="add_download_report_action"/>
             </xpath>
 
-            <!-- <xpath expr="//tree" position="attributes">
-                <attribute name="js_class">model_sale_list</attribute>
-            </xpath> -->
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button class="btn btn-info" string="Approve" type="object" name="approve_to_order" groups="school.group_manager_access" invisible="state in ['draft', 'sent', 'sale']"/>
+            </xpath>
 
             <xpath expr="//form" position="attributes">
                 <attribute name="js_class">model_info</attribute>
             </xpath>
+            
+            <!-- <xpath expr="//form/header/field[@widget='statusbar']" position="attributes">
+                <attribute name="widget">statusbar</attribute>
+                <attribute name="statusbar_visible">draft,sent,to_approve,sale</attribute>
+            </xpath> -->
+
+            <field name="state" position="attributes">
+                <attribute name="widget">statusbar</attribute>
+                <attribute name="statusbar_visible">draft,sent,to_approve,sale</attribute>
+            </field>
+            
 
             <!-- <xpath expr="//form" position="attributes">
                 <attribute name="js_class">model_icon</attribute>
@@ -56,6 +68,7 @@
             <xpath expr="//notebook/page[@name='operations']/field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
                     position="after">
                 <field name="extra_tags"/>
+                <field name="product_image" widget="image" style="inline-size:10%;"/>
             </xpath>
         </field>
     </record>
@@ -67,6 +80,18 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='tax_id']" position="after">
                 <field name="extra_tags"/>
+                <field name="product_image" widget="image" style="inline-size:10%;"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_move_img_form_view" model="ir.ui.view">
+        <field name="name">account.move.order.form.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook/page[@name='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
+                <field name="product_image" widget="image" style="inline-size:10%;"/>
             </xpath>
         </field>
     </record>
@@ -142,26 +167,25 @@
             </xpath>
         </field>
     </record>
-    <!-- <record id="res_config_settings_view_form" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.inherit.point_of_sales</field>
+    <record id="res_config_settings__sale_inherit_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale</field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//setting[@id='variant_options']" position="before">
-                <setting id="sale_discount_limit" title="User can limit the discount amount in the sale order line." help="User can limit the discount amount"> -->
+            <xpath expr="//setting[@id='pricelist_configuration']" position="after">
+                <setting id="sale_discount_limit" title="User can limit the discount amount in the sale order line." help="User can limit the discount amount">
     <!--                   invisible="not group_discount_per_so_line"-->
-                    <!-- <field name="is_discount_limit"/>
-                    <div class="content-group"> -->
+                    <div class="content-group">
     <!--                       invisible="not is_discount_limit"-->
-                        <!-- <div class="mt16">
-                            <label for="discount_limit"/>
-                            <field name="discount_limit" invisible="is_discount_limit == 0"/>
+                        <div class="mt16">
+                            <label for="amount_limit"/>
+                            <field name="amount_limit"/>
                         </div>
                     </div>
                 </setting>
             </xpath> 
         </field>
-    </record> -->
+    </record>
     <record id="res_config_setting_inherit" model="ir.ui.view">
         <field name="name">res.config.setting.inherit</field>
         <field name="model">res.config.settings</field>
