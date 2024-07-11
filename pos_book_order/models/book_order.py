@@ -63,7 +63,7 @@ class BookOrder(models.Model):
                              default=fields.Date.today())
     amount_tax = fields.Float(compute='_compute_amount_all', string='Taxes',
                               help="Tax amount for the order",
-                              dig06its=0, default=1.2)
+                              default=1.2)
     amount_total = fields.Float(compute='_compute_amount_all', string='Total',
                                 help="Total amount of the order",
                                 digits=0)
@@ -113,7 +113,7 @@ class BookOrder(models.Model):
                 sum(line.price_subtotal for line in order.book_line_ids))
             order.amount_total = order.amount_tax + amount_untaxed
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         """ Inherited create function to generate sequence number
             for booker orders

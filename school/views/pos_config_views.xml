@@ -12,7 +12,7 @@
                         <field name="enable_school"/>
                     </div>
                     <div class="o_setting_right_pane">
-                        <label for="enable" string="Booking Orders For School"/>
+                        <label for="enable_school" string="Booking Orders For School"/>
                         <div class="text-muted">
                             Allow booking orders from school
                         </div>

@@ -58,4 +58,15 @@
             <button type="button" class="btn btn-outline-dark" t-on-click="actionSaleList">Download Report</button>
         </xpath>
     </t> -->
+    <!-- <templates xml:space="preserve"> -->
+
+        <!-- <t t-inherit="appointment.Appointment.appointment_info_no_slot" t-inherit-mode="extension">
+            <xpath expr="//div[hasclass('o_appointment_no_slot_overall_helper_txt')]" position="inside">
+                <div class="text-school">
+                    <a href="/school/hello">School</a>.
+                </div>
+            </xpath>
+        </t> -->
+    
+    <!-- </templates> -->
  </templates>

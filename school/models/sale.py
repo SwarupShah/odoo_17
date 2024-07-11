@@ -446,8 +446,9 @@ class SaleOrderLines(models.Model):
                              help="enter the date when order was placed")
     is_available = fields.Boolean(
         string="Is Available", compute="_compute_available_or_not")
+    product_image = fields.Image(string='Product Image' ,related='product_id.image_256')
 
-    product_image = fields.Image(string='Product Image' ,related='product_id.image_1920')
+    # product_image_256 = fields.Image(string='Product Image' ,related='product_id.image_1920')
 
     # def _prepare_procurement_values(self, group_id=False):
     #     values = super(
@@ -476,7 +477,7 @@ class writeAnotherDetail(models.Model):
 
     extra_tags = fields.Char(string="Extra field",
                              help="enter the date when order was placed")
-    product_image = fields.Image(string="Product Image", related='product_id.image_1920')
+    product_image = fields.Image(string="Product Image", related='product_id.image_256')
 
 
 class StockRule(models.Model):
@@ -490,7 +491,7 @@ class StockRule(models.Model):
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
-    product_image = fields.Image(string="Product Image", related='product_id.image_1920')
+    product_image = fields.Image(string="Product Image", related='product_id.image_256')
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -567,7 +568,7 @@ class PosOrder(models.Model):
         string="Order Note")
     discount = fields.Boolean(string="Discount")
 
-    location = fields.Char(String="Location", readonly=True)
+    location = fields.Char(string="Location", readonly=True)
     
 
     @api.model
@@ -630,3 +631,25 @@ class ResConfigSettings(models.TransientModel):
 class PosConfig(models.Model):
     _inherit = 'pos.config'
     location_ids = fields.Many2many('res.location', string='Locations')
+
+
+# import hmac
+# import hashlib
+# from odoo import api, SUPERUSER_ID
+
+# # Connect to your Odoo environment
+# env = api.Environment(cr, SUPERUSER_ID, {})
+
+# # Set your parameters
+# model_name = 'mail.mail'
+# email_to = 'example@example.com'
+# secret_key = env['ir.config_parameter'].get_param('website_form_signature')
+
+# # Generate the HMAC signature
+# signature = hmac.new(
+#     secret_key.encode('utf-8'),
+#     email_to.encode('utf-8'),
+#     hashlib.sha256
+# ).hexdigest()
+
+# print(signature)

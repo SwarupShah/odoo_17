@@ -90,6 +90,7 @@ access_res_location_student,res.location,model_res_location,school.group_school_
 access_res_location_teacher,res.location,model_res_location,school.group_school_teacher_record_access,1,1,1,1
 access_res_location_owner,res.location,model_res_location,school.group_school_owner_record_access,1,1,1,1
 access_res_location_gov,res.location,model_res_location,school.group_gov_record_access,1,1,1,1
+access_res_location_manager,res.location,model_res_location,school.group_manager_access,1,1,1,1
 
 access_school_order_student,school.order,model_school_order,school.group_school_student_record_access,1,0,0,0
 access_school_order_teacher,school.order,model_school_order,school.group_school_teacher_record_access,1,1,1,1

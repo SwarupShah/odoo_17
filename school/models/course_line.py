@@ -13,7 +13,9 @@ class ProvidedCourseLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            
             id =super().create(vals)
+
             course_obj = self.env['provided.course'].browse(id.course_id.id)
             new_number = course_obj.total_seats - id.total_student
             print(new_number)

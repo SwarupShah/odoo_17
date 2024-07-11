@@ -5,6 +5,10 @@
 
         async actionhrList() {
             const records = this.model.root.selection;
+            console.log(this.model)
+            console.log(this.model.root)
+            console.log(this.model.root.selection)
+
             // console.log(typeof records);
             console.log(records);
             let sum=0
