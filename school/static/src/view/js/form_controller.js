@@ -22,7 +22,6 @@ class jsClassModelIcon extends FormController {
         const status = result[1].status;
         // console.log(status)
 
-
         if (action) {
 
             if (status === "pass") {
