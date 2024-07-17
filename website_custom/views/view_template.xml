@@ -10,7 +10,7 @@
                 <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
                     <img src="/website_custom/static/src/img/logo.jpeg" class="d-block mx-lg-auto img img-fluid" alt="BV Themes" width="700" height="500" loading="lazy"/>
-                    <!-- <img class="img img-fluid d-block" src="" data-name="Image" data-index="1" alt=" "/> -->
+                    <img class="img img-fluid d-block" src="" data-name="Image" data-index="1" alt=" "/>
                 </div>
                 <div class="col-lg-6">
                     <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Responsive left-aligned hero with image</h1>
@@ -28,19 +28,22 @@
                         <h1>Form!</h1>
                     </div>
                 </div>
-                <form class="my-3 mx-1" action="/myhome/submited?status=success" method="post">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp"/>
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" name="password"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                <section class="s_website_form_my">
+                    <form class=" my-3 mx-1" action="/myhome/submited?status=success" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp"/>
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="password_input form-control" id="exampleInputPassword1" name="password"/>
+                        </div>
+                        <a href="#" class="s_website_form_send_my btn btn-primary">Submit</a>
+                        <span class="text-danger mx-1" id="s_website_form_result_my"></span>
+                    </form>        
+                </section>
 
                 <div class="m-1">
                     <div>

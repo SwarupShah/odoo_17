@@ -10,7 +10,7 @@
     'license': 'OPL-1',
     'assets': {
         'web.assets_frontend': [
-            # 'school/static/src/view/js/hello.js',
+            'school/static/src/view/js/hello.js',
             'school/static/src/view/js/sidebar_portal.js',
         ],
         'web.assets_backend': [

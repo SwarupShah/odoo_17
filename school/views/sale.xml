@@ -237,21 +237,8 @@
     
 
     <!-- menu in website -->
-    <record id="menu_school_menu" model="website.menu">
-        <field name="name">School</field>
-        <field name="url">/school</field>
-        <field name="page_id" ref=""/>
-        <field name="parent_id" ref="website.main_menu"/>
-        <field name="sequence" type="int">30</field>
-<!--            <field name="website_id" ref="website.default_website"/>-->
-    </record>
+    
 
-    <template id="checkout_extend" inherit_id="website_sale.checkout_layout">
-        <xpath expr="//div[@id='o_cart_summary']/div/div/t[@t-call='website_sale.navigation_buttons']" position="after">
-            <div class="custom-button">
-                <button type="button" class="btn btn-primary mt-3" style="width: 100%;" id="custom_checkout_button">Add to sale</button>
-            </div>
-        </xpath>
-    </template>
+    
     </data>
 </odoo>

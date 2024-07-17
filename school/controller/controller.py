@@ -5,17 +5,6 @@ import json
 
 class Main(http.Controller):
 
-    @http.route('/school', type='http', auth='public', website=True)
-    def hello(self, **kwargs):
-        # return request.render("school.shopping_template", {
-        #     'names': ['NAMAN', 'Veera', 'Anubhav', 'rohit']
-        # })
-        order_data = request.env['sale.order'].search([])
-        return request.render("school.shopping_customer_id", {
-            'orders': order_data
-        })
-    
-
     @http.route('/create_sale_order', type='json', auth='users', methods=['POST'], csrf=False)
     def create_sale_order(self, **kwargs):
         # Extract data from the request (this example assumes JSON payload)

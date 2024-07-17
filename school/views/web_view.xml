@@ -33,39 +33,4 @@
             </div>
         </t>
     </template>
-    
-    
-    
-    
-    <template id="shopping_customer_id" name="shopping mall customer">
-        <t t-call="website.layout">
-            <div class="shopping_mall_customer my-3 container">
-                <table class="table table-info">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Number</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">sales Person</th>
-                            <th scope="col">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <t t-set="i" t-value="1"/>
-                        <t t-foreach="orders" t-as="order">
-                            <tr>
-                                <th scope="row"><t t-esc="i"/></th>
-                                <td><t t-esc="order.name"/></td>
-                                <td><t t-esc="order.partner_id.name"/></td>
-                                <td><t t-esc="order.user_id.name"/></td>
-                                <td><t t-esc="order.amount_total"/></td>
-                            </tr>
-                            <t t-set="i" t-value="i + 1"/>
-                        </t>
-                    </tbody>
-                </table>
-            </div>
-        </t>
-    </template>
-    
 </odoo>

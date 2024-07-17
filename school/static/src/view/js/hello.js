@@ -20,7 +20,7 @@ WebsiteSale.include({
     _onChangeState: function () {
         console.log("xyz")
         this.autoStreetCity.querySelectorAll("input").forEach((input) => {
-                                input.value = "Janvi";
+                                input.value = "Swarup";
                             });
     },
 
