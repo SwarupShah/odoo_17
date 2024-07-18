@@ -13,26 +13,33 @@ class myMain(http.Controller):
         # print(kwargs)
         return request.render("website_custom.my_model_layout")
 
-    @http.route('/myhome/submited', type='http', auth='public', method=['post'], website=True)
-    def status(self,**kwargs):
-        print(kwargs)
-        status = kwargs.get('status')
-        print(request.env.uid)
-        if status == "success":
-            if request.env.user.name == "Public user":
-                request.env['public.data'].create({
-                    'email': kwargs.get('email'),
-                    'password': kwargs.get('password'),
-                })
+    @http.route('/myhome/submited', type='http', auth='public', methods=['GET', 'POST'], website=True)
+    def status(self, **kwargs):
+        if request.httprequest.method == 'POST':
+            try:
+                if request.env.user.name == "Public user":
+                    request.env['public.data'].create({
+                        'email': kwargs.get('email'),
+                        'password': kwargs.get('password'),
+                    })
+                else:
+                    request.env['signed.data'].create({
+                        'user_id': request.env.uid,
+                        'email': kwargs.get('email'),
+                        'password': kwargs.get('password'),
+                    })
+                return request.redirect('/myhome/submited?status=success')
+            except Exception as e:
+                return request.redirect('/myhome/submited?status=error')
+
+        elif request.httprequest.method == 'GET':
+            status = kwargs.get('status')
+            if status == "success":
+                return request.render("website_custom.my_model_status")
+            elif status == "error":
                 return request.render("website_custom.my_model_status")
             else:
-                request.env['signed.data'].create({
-                    'user_id': request.env.uid,
-                    'email': kwargs.get('email'),
-                    'password': kwargs.get('password'),
-                })
-                return request.render("website_custom.my_model_status")
-
+                return request.redirect('/myhome')
 
     @http.route('/saleOrder', type='http', auth='user', website=True)
     def saleOrders(self, **kwargs):

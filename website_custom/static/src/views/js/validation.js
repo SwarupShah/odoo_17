@@ -8,6 +8,7 @@ publicWidget.registry.s_website_form_my = publicWidget.Widget.extend({
         this._super.apply(this,arguments);
         this._bindEvents();
         this.passwordInput = document.querySelector(".password_input");
+        this.emailInput = document.querySelector(".email_input");
         this.errorMessage = document.querySelector("#s_website_form_result_my");
     },
 
@@ -17,15 +18,23 @@ publicWidget.registry.s_website_form_my = publicWidget.Widget.extend({
 
     _send: function () {
         var password = this.passwordInput.value;
+        var email = this.emailInput.value;
 
         const passwordError = this._validatePassword(password);
-        if (passwordError == "success"){
-            console.log(passwordError)
+        const emailError = this._validateEmail(email)
+        if (emailError === "success" && passwordError === "success"){
             this.$el.find('form').submit();
         }else{
-            console.log(passwordError)
-            this.errorMessage.textContent = passwordError;
+            this.errorMessage.textContent = emailError !== "success" ? emailError : passwordError;
         }
+    },
+    _validateEmail: function (email) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            return 'Please enter a valid email address.';
+        }
+        return 'success';
     },
     _validatePassword: function (password) {
         const minLength = 8;

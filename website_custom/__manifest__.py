@@ -10,7 +10,10 @@
     'data': [
         # 'data/payment_add.xml',
         'security/ir.model.access.csv',
-        
+
+        'views/menu.xml',
+        'views/public_data_form.xml',
+        'views/signed_data_form.xml',
         'views/website_menu.xml',
         'views/view_template.xml',
         'views/sale_view.xml',
