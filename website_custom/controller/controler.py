@@ -74,3 +74,8 @@ class myMain(http.Controller):
                 return request.redirect('/saleOrder')
         else:
             return request.redirect('/saleOrder')
+    
+    @http.route('/myhome/sale_data', type="json", auth="public")
+    def sold_total(self):
+       sale_obj = request.env['sale.order'].sudo().search([])
+       return sale_obj
