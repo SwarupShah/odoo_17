@@ -44,42 +44,80 @@
                         <span class="text-danger mx-1" id="s_website_form_result_my"></span>
                     </form>        
                 </section>
-
-                <div class="m-1">
-                    <div>
+    
+                <!-- Modal -->
+                
+                <form>
+                    <div class="text-center">
+                        <h1 class="modal-title fs-1" id="exampleModalLabel">Search Sale Order</h1>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Search Sale Order
+                        </button>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Search Sale Order</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <!-- <label for="orderNames" class="form-label">Sale Orders</label> -->
+                                        <!-- <select class="form-select" id="orderNames" name="orderNames">
+                                            <t t-foreach="sale_orders" t-as="order">
+                                                <option t-att-value="order.id"><t t-esc="order.name"/></option>
+                                            </t>
+                                        </select> -->
+                                        <label for="orderNames" class="form-label">Sale Orders</label>
+                                        <input type="text" class="form-control" name="search_order" id="orderSearchInput" placeholder="Search sale orders"/>
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <div t-if="view_table" class="m-1">
+                    <!-- <div>
                         <div class="m-1 p-1 text-center">
                             <h1>Table!</h1>
                         </div>
-                    </div>
+                    </div> -->
                     <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Create Data</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Sales Person</th>
+                            <th scope="col">Company</th>
+                            <th scope="col" class="text-end">Amount Total</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <t t-foreach="sale_order_line" t-as="order">
+                            <tr>
+                                <th scope="row"><t t-esc="order.name"></t></th>
+                                <td><t t-esc="order.create_date"></t></td>
+                                <td><t t-esc="order.partner_id.name"></t></td>
+                                <td><t t-esc="order.user_id.name"></t></td>
+                                <td><t t-esc="order.company_id.name"></t></td>
+                                <td class="text-end"><t t-esc="order.currency_id.symbol"/><t t-esc="order.amount_total"></t></td>
+                            </tr>
+                        </t>
                         </tbody>
                     </table>
+                </div>
+                <div t-if='error'>
+                    <div class="alert alert-danger" role="alert">
+                        OOPS! No Record Found.
+                    </div>
                 </div>
             </div>
         </t>

@@ -10,8 +10,22 @@ class myMain(http.Controller):
 
     @http.route('/myhome', type='http', auth='public', website=True)
     def hello(self,**kwargs):
-        # print(kwargs)
-        return request.render("website_custom.my_model_layout")
+        # sale_orders = request.env['sale.order'].sudo().search([])
+        sale_order_line = None
+        view_table = False
+        error = False
+        if kwargs.get('search_order'):
+            # sale_order_line = request.env['sale.order'].browse(int(orderNames))
+            sale_order_line = request.env['sale.order'].search([('name', 'ilike', kwargs.get('search_order'))])
+            if len(sale_order_line.ids) == 0:
+                error = True
+            view_table = True
+        return request.render("website_custom.my_model_layout", {
+            # 'sale_orders': sale_orders,
+            'sale_order_line': sale_order_line,
+            'view_table': view_table,
+            'error': error,
+        })
 
     @http.route('/myhome/submited', type='http', auth='public', methods=['GET', 'POST'], website=True)
     def status(self, **kwargs):
