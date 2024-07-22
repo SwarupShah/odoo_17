@@ -75,7 +75,14 @@ class myMain(http.Controller):
         else:
             return request.redirect('/saleOrder')
     
-    @http.route('/myhome/sale_data', type="json", auth="public")
-    def sold_total(self):
-       sale_obj = request.env['sale.order'].sudo().search([])
-       return sale_obj
+    @http.route('/myhome/sale_data', type='json', auth='public')
+    def sold_total(self, **kwargs):
+        sale_orders = request.env['sale.order'].sudo().search([('access_token','!=',False)])
+        orders_data = [{'id':order.id,"name": order.name,'access_token': order.access_token} for order in sale_orders]
+        return orders_data
+    
+    @http.route('/myhome/sale_data_form', type='json', auth='public')
+    def sale_data(self, **kwargs):
+        sale_orders = request.env['sale.order'].sudo().search([])
+        orders_data = [{"id": order.id, "name": order.name, "access_token": order.access_token} for order in sale_orders]
+        return orders_data

@@ -18,13 +18,17 @@
         'views/view_template.xml',
         'views/sale_view.xml',
         'views/order_detail.xml',
-        'views/snippet_add.xml'
+        'views/snippet_add.xml',
+        'views/snippet_success.xml',
+        'views/snippet_sale_order_name.xml',
+        'views/snippet_sale_order_form.xml',
         
     ],
     'assets': {
         'web.assets_frontend': [
             'website_custom/static/src/views/js/validation.js',
             'website_custom/static/src/views/js/snippet_data_sale.js',
+            'website_custom/static/src/views/js/snippet_data_sale_form.js',
         ],
     }
 
