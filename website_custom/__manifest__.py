@@ -22,6 +22,7 @@
         'views/snippet_success.xml',
         'views/snippet_sale_order_name.xml',
         'views/snippet_sale_order_form.xml',
+        'views/portal_create_sale_order.xml',
         
     ],
     'assets': {
@@ -29,6 +30,7 @@
             'website_custom/static/src/views/js/validation.js',
             'website_custom/static/src/views/js/snippet_data_sale.js',
             'website_custom/static/src/views/js/snippet_data_sale_form.js',
+            'website_custom/static/src/views/js/poteal_create_sale_order.js'
         ],
     }
 

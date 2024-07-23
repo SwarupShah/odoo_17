@@ -86,3 +86,50 @@ class myMain(http.Controller):
         sale_orders = request.env['sale.order'].sudo().search([])
         orders_data = [{"id": order.id, "name": order.name, "access_token": order.access_token} for order in sale_orders]
         return orders_data
+    
+    @http.route('/myhome/sale_selected_data_form', type='json', auth='public')
+    def sale_selected_data(self, **kwargs):
+        sale_order = request.env['sale.order'].sudo().search([('id', '=', int(kwargs.get('id')))])
+        orders_data = []
+
+        for order in sale_order:
+            order_data = {
+                "id": order.id,
+                "name": order.name,
+                "access_token": order.access_token,
+                "partner": order.partner_id.name,
+                "order_date": order.date_order,
+                "total_amount": order.currency_id.symbol + str(order.amount_total),
+                "items": []
+            }
+
+            for line in order.order_line:
+                product_image_url = f'/web/image/product.product/{line.product_id.id}/image_128'
+                order_data["items"].append({
+                    "product_name": line.product_id.name,
+                    "quantity": line.product_uom_qty,
+                    "price_subtotal": line.currency_id.symbol + str(line.price_subtotal),
+                    "product_image": product_image_url
+                })
+
+            orders_data.append(order_data)
+
+        return orders_data
+        # <div class="alert alert-light text-dark border rounded-4" role="alert">
+
+    @http.route('/myhome/sale_data_create', type='json', auth='public')
+    def sale_data(self, **kwargs):
+        if kwargs.get('id',"") != "":
+            created_order = request.env['sale.order'].create({
+                'partner_id': kwargs.get('id'),
+                'partner_invoice_id': kwargs.get('id'),
+                'partner_shipping_id': kwargs.get('id'),
+                'user_id': request.env.uid,
+            })
+            created_order.action_confirm()
+            return {'status': 'success'}
+
+        partner_data = request.env['res.partner'].sudo().search([])
+        partners = [{"id": order.id, "name": order.name} for order in partner_data]
+        return partners
+    
