@@ -23,6 +23,7 @@
         'views/snippet_sale_order_name.xml',
         'views/snippet_sale_order_form.xml',
         'views/portal_create_sale_order.xml',
+        'views/portel_add_section.xml',
         
     ],
     'assets': {
