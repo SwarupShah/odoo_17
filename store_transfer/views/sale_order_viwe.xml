@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="view_order_form_inherit_sale_stock_shop" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.shop</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_delivery']" position="before">
+                        <button type="object"
+                            name="action_view_shop"
+                            class="oe_stat_button"
+                            icon="fa-truck">
+                            <!-- <field name="dropship_picking_count" widget="statinfo" string="Dropship"/> -->
+                        </button>
+                </xpath>
+           </field>
+        </record>
+    </data>
+</odoo>

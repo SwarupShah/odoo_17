@@ -10,7 +10,9 @@
     'license': 'OPL-1',
     'data': [
         'security/ir.model.access.csv',
+        'data/add_warehouse.xml',
         'views/menu.xml',
         'views/store_transfer_view.xml',
+        'views/sale_order_viwe.xml',
     ]
 }

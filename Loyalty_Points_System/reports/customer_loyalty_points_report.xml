@@ -1,0 +1,50 @@
+<odoo>
+    <template id="report_loyalty_points">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Customer Loyalty Points Report</h2>
+                    </div>
+                    <table style="font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Customer Name:</th>
+                                <th>Points Earned:</th>
+                                <th>Points Redeemed</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span t-field="o.customer_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.points_earned"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.points_redeemed"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.balance"/>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="customer_loyalty_points_web_report" model="ir.actions.report">
+        <field name="name">Print Customer Loyalty Report</field>
+        <field name="model">loyalty.points</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Loyalty_Points_System.report_loyalty_points</field>
+        <field name="report_file">Loyalty_Points_System.report_loyalty_points</field>
+        <field name="binding_model_id" ref="Loyalty_Points_System.model_loyalty_points"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
