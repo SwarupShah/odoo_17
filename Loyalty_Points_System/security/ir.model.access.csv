@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-Loyalty_Points_System.access_loyalty_points,access_loyalty_points,Loyalty_Points_System.model_loyalty_points,base.group_user,1,1,1,1
-Loyalty_Points_System.access_loyalty_wizard,access_loyalty_wizard,Loyalty_Points_System.model_loyalty_wizard,base.group_user,1,1,1,1

@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class StoreTransferLine(models.Model):
     _name = 'store.transfer.line'
@@ -7,4 +8,28 @@ class StoreTransferLine(models.Model):
     transfer_id = fields.Many2one('store.transfer', string='Store Transfer', required=True, ondelete='cascade')
     product_id = fields.Many2one('product.product', string='Product', required=True)
     quantity = fields.Float(string='Quantity', required=True)
-    
+
+    @api.constrains('quantity')
+    def _check_quantity(self):
+        for qty in self:
+            if qty.quantity <= 0:
+                raise ValidationError("Quantity must be greater than zero.")
+
+    # @api.model
+    # def _get_product(self):
+    #     print("=============================")
+    #     print("if")
+    #     warehouse_id = self.transfer_id.source_warehouse_id.id
+    #     products = self.env['product.product'].with_context(warehouse=warehouse_id).search([('qty_available', '>', 0)])
+    #     print(products)
+    #     product_ids = products.ids
+    #     return product_ids
+        #     # return {
+        #     #     'domain': {'product_id': [('id', 'in', product_ids)]}
+        #     # }
+        # else:
+        #     print("else")
+        #     return []
+        #     # return {
+        #     #     'domain': {'product_id': []}
+        #     # }

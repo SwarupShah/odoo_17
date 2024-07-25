@@ -11,9 +11,10 @@ class StoreTransfer(models.Model):
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
         ('done', 'Done'),
+        ('cancel','Cancel')
     ], default='draft', string='State', store=True)
     picking_ids = fields.One2many('stock.picking', 'transfer_id', string='Related Pickings', readonly=True)
-    sale_order_id = fields.Many2one('sale.order', string='Sale Order')  # Added field to link to sale order
+    sale_order_id = fields.Many2one('sale.order', string='Sale Order')  
     picking_id_count = fields.Integer(string="Count Transfer", compute="_compute_transfer", store=True)
 
     @api.depends('picking_ids')
@@ -56,3 +57,14 @@ class StoreTransfer(models.Model):
         picking.action_confirm()
         self.picking_ids = [(4, picking.id)]
         self.state = 'confirmed'
+    
+    def cancel_transfer(self):
+        if self.state == 'draft':
+            self.state = 'cancel'
+        elif self.state == 'confirmed':
+            for line in self.picking_ids:
+                line.action_cancel()
+            if self.sale_order_id:
+                self.sale_order_id.state = "draft"
+                # sorder.action_cancel()
+            self.state = 'cancel'

@@ -9,11 +9,17 @@
                         <button type="object"
                             name="action_view_shop"
                             class="oe_stat_button"
-                            icon="fa-truck">
-                            <!-- <field name="dropship_picking_count" widget="statinfo" string="Dropship"/> -->
+                            icon="fa-truck"
+                            invisible="state == 'draft'">
+                            <field name="store_transfer_count" widget="statinfo" string="Dropship"/>
                         </button>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                        <field name="destination_warehouse"/>
                 </xpath>
            </field>
         </record>
+
     </data>
 </odoo>
