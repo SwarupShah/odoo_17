@@ -44,6 +44,23 @@ class StoreTransfer(models.Model):
                 'name': line.product_id.name,
             }))
 
+        # picking = self.env['stock.picking'].create({
+        #     'partner_id': self.destination_warehouse_id.partner_id.id,
+        #     'picking_type_id': self.source_warehouse_id.out_type_id.id,
+        #     'location_id': self.source_warehouse_id.lot_stock_id.id,
+        #     'location_dest_id': self.destination_warehouse_id.lot_stock_id.id,
+        #     'origin': origin if origin != "" else "Outgoing shipment to " + self.destination_warehouse_id.name + " from " + self.source_warehouse_id.name,
+        #     'move_ids_without_package': move_lines,
+        #     'transfer_id': self.id,
+        # })
+
+        # picking.action_confirm()
+        # self.picking_ids = [(4, picking.id)]
+        self.create_picking(origin,move_lines)
+        self.state = 'confirmed'
+
+    def create_picking(self,origin,move_lines):
+        
         picking = self.env['stock.picking'].create({
             'partner_id': self.destination_warehouse_id.partner_id.id,
             'picking_type_id': self.source_warehouse_id.out_type_id.id,
@@ -53,10 +70,8 @@ class StoreTransfer(models.Model):
             'move_ids_without_package': move_lines,
             'transfer_id': self.id,
         })
-
         picking.action_confirm()
         self.picking_ids = [(4, picking.id)]
-        self.state = 'confirmed'
     
     def cancel_transfer(self):
         if self.state == 'draft':

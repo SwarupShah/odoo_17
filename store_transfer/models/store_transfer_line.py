@@ -33,3 +33,19 @@ class StoreTransferLine(models.Model):
         #     # return {
         #     #     'domain': {'product_id': []}
         #     # }
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for record in records:
+            if record.transfer_id.state == 'confirmed':
+                move_line = [(0, 0, {
+                    'product_id': record.product_id.id,
+                    'product_uom_qty': record.quantity,
+                    'location_id': record.transfer_id.source_warehouse_id.lot_stock_id.id,
+                    'location_dest_id': record.transfer_id.destination_warehouse_id.lot_stock_id.id,
+                    'name': record.product_id.name,
+                })]
+                record.transfer_id.create_picking('', move_line)
+            elif record.transfer_id.state == 'cancel' or record.transfer_id.state == 'done':
+                raise ValidationError("Cannot add lines to a canceled transfer.")
+        return records

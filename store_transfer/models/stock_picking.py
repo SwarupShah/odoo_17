@@ -5,11 +5,8 @@ import logging
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-
-
     transfer_id = fields.Many2one("store.transfer", string="Stock Transfer")
-
-
+    
     def button_validate(self):
         res = super(StockPicking, self).button_validate()
         if self.transfer_id:
