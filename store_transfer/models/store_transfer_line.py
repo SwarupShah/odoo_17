@@ -15,24 +15,6 @@ class StoreTransferLine(models.Model):
             if qty.quantity <= 0:
                 raise ValidationError("Quantity must be greater than zero.")
 
-    # @api.model
-    # def _get_product(self):
-    #     print("=============================")
-    #     print("if")
-    #     warehouse_id = self.transfer_id.source_warehouse_id.id
-    #     products = self.env['product.product'].with_context(warehouse=warehouse_id).search([('qty_available', '>', 0)])
-    #     print(products)
-    #     product_ids = products.ids
-    #     return product_ids
-        #     # return {
-        #     #     'domain': {'product_id': [('id', 'in', product_ids)]}
-        #     # }
-        # else:
-        #     print("else")
-        #     return []
-        #     # return {
-        #     #     'domain': {'product_id': []}
-        #     # }
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
@@ -49,3 +31,22 @@ class StoreTransferLine(models.Model):
             elif record.transfer_id.state == 'cancel' or record.transfer_id.state == 'done':
                 raise ValidationError("Cannot add lines to a canceled transfer.")
         return records
+
+    def write(self, vals):
+        for record in self:
+            if record.transfer_id.state == 'confirmed':
+                if 'quantity' in vals:
+                    for rec in record.transfer_id.picking_ids:
+                        for prod in rec.move_ids_without_package:
+                            if prod.product_id.id == record.product_id.id:
+                                prod.product_uom_qty = vals['quantity']
+                if 'product_id' in vals:
+                    new_product_id = vals['product_id']
+                    for rec in record.transfer_id.picking_ids:
+                        for prod in rec.move_ids_without_package:
+                            if prod.product_id.id == record.product_id.id:
+                                prod.product_id = new_product_id
+            elif record.transfer_id.state in ['done', 'cancel']:
+                raise ValidationError("You cannot change the product information because the transfer state is in " + record.transfer_id.state + " state.")
+        return super().write(vals)
+        

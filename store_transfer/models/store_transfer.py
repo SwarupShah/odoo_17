@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class StoreTransfer(models.Model):
     _name = 'store.transfer'
@@ -16,6 +17,16 @@ class StoreTransfer(models.Model):
     picking_ids = fields.One2many('stock.picking', 'transfer_id', string='Related Pickings', readonly=True)
     sale_order_id = fields.Many2one('sale.order', string='Sale Order')  
     picking_id_count = fields.Integer(string="Count Transfer", compute="_compute_transfer", store=True)
+
+    def write(self, vals):
+        if self.state != "draft":
+            raise ValidationError("Cannot change the record at this state")
+        return super().write(vals)
+
+    def unlink(self):
+        if self.state != "draft":
+            raise ValidationError("Cannot delete the record at this state")
+        return super().unlink()
 
     @api.depends('picking_ids')
     def _compute_transfer(self):
@@ -44,18 +55,6 @@ class StoreTransfer(models.Model):
                 'name': line.product_id.name,
             }))
 
-        # picking = self.env['stock.picking'].create({
-        #     'partner_id': self.destination_warehouse_id.partner_id.id,
-        #     'picking_type_id': self.source_warehouse_id.out_type_id.id,
-        #     'location_id': self.source_warehouse_id.lot_stock_id.id,
-        #     'location_dest_id': self.destination_warehouse_id.lot_stock_id.id,
-        #     'origin': origin if origin != "" else "Outgoing shipment to " + self.destination_warehouse_id.name + " from " + self.source_warehouse_id.name,
-        #     'move_ids_without_package': move_lines,
-        #     'transfer_id': self.id,
-        # })
-
-        # picking.action_confirm()
-        # self.picking_ids = [(4, picking.id)]
         self.create_picking(origin,move_lines)
         self.state = 'confirmed'
 
